@@ -1,0 +1,15 @@
+{
+  "name": "mytor-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Marketing website for Mytor (Uzbek Latin + Russian). Static, dependency-free build.",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "serve": "node scripts/serve.js",
+    "start": "node scripts/build.js && node scripts/serve.js",
+    "check": "node scripts/build.js && node scripts/check.js",
+    "screenshots": "node scripts/screenshots.js"
+  }
+}
