@@ -17,7 +17,7 @@ export function layout({ t, alt, key, title, description, body, cfg, assetVersio
     .map((L) => {
       const here = L.lang === lang;
       const href = here ? paths[lang] : paths[L.lang];
-      return `<a href="${href}" hreflang="${L.htmlLang}" lang="${L.htmlLang}"${here ? ' aria-current="true"' : ""} aria-label="${L.name}">${L.short}</a>`;
+      return `<a href="${href}" hreflang="${L.htmlLang}" lang="${L.htmlLang}"${here ? ' aria-current="true"' : ""} aria-label="${L.name}" title="${L.name}"><img class="lang-flag" src="${site(`/assets/flag-${L.lang}.svg`)}" width="24" height="18" alt="" aria-hidden="true"></a>`;
     })
     .join("");
 
