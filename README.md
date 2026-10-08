@@ -30,7 +30,9 @@ Every route is a real `index.html`, so direct loads and refreshes work on any st
 
 - `MYTOR_FORM_ENDPOINT` — URL that accepts the demo request as a JSON POST and returns 2xx.
   **Not set by default:** the form validates, then clearly says it is not connected and that nothing was sent.
-  Payload: `{ name, shop, city, phone, branches, note, consent, lang, page }`.
+  Payload: `{ name, phone, city, shop, branches, note, consent, lang, page }`. Required: `name`, `phone`, `city`, `consent: true`.
+  Optional fields are `null` when empty; `branches` is `"1"`, `"2"` or `"3+"`. The form gives up after 15 s and keeps the typed data on any failure.
+- `MYTOR_SITE_URL` also enables `og:image` (per-language `assets/og-uz.png` / `og-ru.png`) and the large Telegram/social preview.
 - `MYTOR_SITE_URL` — public origin (e.g. `https://example.uz`). When set, pages get absolute canonical/hreflang URLs and `sitemap.xml` is generated.
   Origin only: the base path below is added automatically.
 - `MYTOR_BASE_PATH` — folder the site is served from (e.g. `/mytor` for `https://<user>.github.io/mytor/`). Empty for a domain root.
@@ -68,6 +70,22 @@ node scripts/screenshots.js
 
 Saves real full-page and interaction screenshots to `screenshots/`.
 
+```bash
+node scripts/journey.js http://localhost:4321 --expect=not-connected
+```
+
+A shop owner's journey on a 390 px phone in both languages, with real taps and typing: home → menu → pricing → FAQ → «Demo so‘rash» → empty and wrong submits → fixed form → result, plus the voice demo, sample lookup, language switch and remembered language.
+`--expect` must match the build: `not-connected` (default), `success` or `error`.
+
+To test response handling without a real endpoint, run `node scripts/form-mock.js` (localhost:4400; `/ok`, `/fail`, `/reject`, `/slow`), build with `MYTOR_FORM_ENDPOINT=http://localhost:4400/ok`, then run the journey with `--expect=success --mock=http://localhost:4400`.
+With a real endpoint configured, every journey run sends one fictional test request there.
+
+```bash
+node scripts/images.js
+```
+
+Re-renders `src/assets/og-uz.png`, `og-ru.png` and `apple-touch-icon.png` from the current headline copy.
+
 ## Structure
 
 - `src/content/uz.js`, `src/content/ru.js` — all copy, metadata, form messages and sample (fictional) data
@@ -76,5 +94,6 @@ Saves real full-page and interaction screenshots to `screenshots/`.
 - `src/pages/*.js` — one module per page
 - `src/assets/` — `styles.css`, `site.js` (menu, voice demo, sample lookup, form), favicon
 
-All interface previews are labelled "Interfeys namunasi" / "Пример интерфейса" and use fictional data.
+All interface previews use fictional data; the footer of every page says so ("interfeys namunasi" / "пример интерфейса"), and `npm run check` enforces it.
+The language switch remembers the choice on the device (`localStorage`, key `mytor-lang`); it is only used to send someone who chose Russian from the bare `/` to `/ru/`.
 The voice demo never requests the microphone, records audio, calls an API or changes data.

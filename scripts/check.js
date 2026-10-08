@@ -106,8 +106,8 @@ for (const file of html) {
   // Style rules: no eyebrow badges above headlines, no em dashes in titles/descriptions.
   if (/class="eyebrow"/.test(src)) fail(`${rel}: eyebrow badge above a headline`);
   if (/<title>[^<]*—|content="[^"]*—/.test(src)) fail(`${rel}: em dash in title/description`);
-  // Previews are labelled.
-  if (/class="phone /.test(src) && !/(Interfeys namunasi|Пример интерфейса)/.test(src)) fail(`${rel}: phone preview without sample label`);
+  // Pages with previews carry the footer note that screens are examples with fictional data.
+  if (/class="phone /.test(src) && !/interfeys namunasi|пример интерфейса/i.test(src)) fail(`${rel}: phone preview without the "screens are examples" note`);
 }
 
 // 3. Language switch keeps the equivalent page.

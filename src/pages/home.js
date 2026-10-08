@@ -17,7 +17,6 @@ const bridge = (t) => {
         <dl class="draft draft-tight">${b.record.map(([k, v]) => `<div class="frow is-ok"><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
         ${stamp(d.stamp, "bridge-stamp")}
       </div>
-      <figcaption><p class="sample-tag"><b>${t.ui.sample}</b><span> · ${t.ui.sampleNote}</span></p></figcaption>
     </figure>
     <ol class="outcomes">
       ${b.outcomes.map((o, i) => `<li class="oc"><div class="oc-copy"><h3>${o.title}</h3><p>${o.why}</p></div><div class="oc-vis">${visuals[i]}</div></li>`).join("")}
@@ -53,7 +52,6 @@ export default function home(t, lang) {
       <h1 class="display">${h.title}</h1>
       <p class="lead">${h.lead}</p>
       ${actions(t, lang)}
-      <p class="status-note"><span class="status-dot" aria-hidden="true"></span><span>${h.status}</span></p>
     </div>
     <div class="hero-visual">${heroPhone(t)}</div>
   </div>

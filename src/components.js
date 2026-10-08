@@ -58,8 +58,6 @@ export const stampsRow = (filled, total = 6, label = "") =>
 // Short reassurance chips (e.g. "6 hafta · Bepul · Majburiyatsiz").
 export const facts = (items) => `<ul class="facts">${items.map((x) => `<li>${icon.check}${x}</li>`).join("")}</ul>`;
 
-export const sampleTag = (t) => `<p class="sample-tag"><b>${t.ui.sample}</b><span> · ${t.ui.sampleNote}</span></p>`;
-
 // Status-bar battery (decorative).
 const battery = `<svg class="phone-battery" viewBox="0 0 27 13" width="27" height="13" aria-hidden="true" focusable="false"><rect x=".75" y=".75" width="22.5" height="11.5" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".55"/><rect x="2.6" y="2.6" width="15.5" height="7.8" rx="1.8" fill="currentColor"/><path d="M24.9 4.4v4.2c.9-.3 1.5-1.1 1.5-2.1s-.6-1.8-1.5-2.1z" fill="currentColor" opacity=".55"/></svg>`;
 
@@ -103,7 +101,6 @@ export const heroPhone = (t) => {
     <div class="say-bubble">${icon.mic}<span>${h.say}</span></div>
     ${phone("14:32", body, "phone-hero")}
     <div class="notify-card hero-notify">${icon.bell}<div><b>${h.notifyFrom}</b><span>${h.notifyText}</span></div></div>
-    <figcaption>${sampleTag(t)}</figcaption>
   </figure>`;
 };
 
@@ -148,15 +145,13 @@ export const voiceDemo = (t, idBase = "vd") => {
      <div class="confirm-wrap"><span class="fake-btn">${icon.check}${d.confirm}</span>${stamp(d.stamp, "rec-stamp rec-stamp-lg")}</div>
      <p class="scr-note">${d.confirmNote}</p>`,
     `<div class="saved">${icon.check}<span>${d.saved}</span></div>
-     <div class="mini-card"><p class="mini-h">${icon.book}${d.history}</p><p>${d.historyEntry}</p></div>
-     <div class="mini-card"><p class="mini-h">${icon.drop}${d.stock}</p><p class="num stock-move"><s>${d.stockFrom}</s>${icon.arrow}<b>${d.stockTo}</b></p><div class="lvl" aria-hidden="true"><i style="--from:62%;--to:59%"></i></div></div>
-     <p class="scr-note">${d.driverNote}</p>`,
+     <div class="mini-card"><p class="mini-h">${icon.book}${d.history}</p><p>${d.historyEntry}</p><p class="scr-note">${d.driverNote}</p></div>
+     <div class="mini-card"><p class="mini-h">${icon.drop}${d.stock}</p><p class="num stock-move"><s>${d.stockFrom}</s>${icon.arrow}<b>${d.stockTo}</b></p><div class="lvl" aria-hidden="true"><i style="--from:62%;--to:59%"></i></div></div>`,
   ];
   return `<div class="vdemo" data-vdemo role="region" aria-label="${d.region}">
     <div class="vdemo-stage">
       <figure class="vdemo-fig">
         ${phone("14:31", `<ol class="vscreens">${screens.map((s, i) => `<li class="vscreen scr" data-step="${i + 1}" id="${idBase}-s${i + 1}"><p class="vscreen-step">${i + 1}. ${d.steps[i].title}</p>${s}</li>`).join("")}</ol>`, "phone-demo")}
-        <figcaption>${sampleTag(t)}</figcaption>
       </figure>
       <div class="notify-card vnotify" data-vnotify>
         ${icon.bell}<div><b>${d.notifyFrom} <span class="num">${d.time}</span></b><span><strong>${d.notifyTitle}.</strong> ${d.notifyText}</span></div>
@@ -172,7 +167,6 @@ export const voiceDemo = (t, idBase = "vd") => {
         <button type="button" class="btn btn-dark btn-sm" data-vnext data-label-next="${d.next}" data-label-restart="${d.restart}">${d.next}</button>
         <button type="button" class="btn btn-ghost btn-sm" data-vplay data-label-play="${d.play}" data-label-pause="${d.pause}">${icon.play}<span>${d.play}</span></button>
       </div>
-      <p class="vnote">${d.noMic}</p>
       <p class="sr-only" aria-live="polite" data-vlive></p>
     </div>
   </div>`;
@@ -189,7 +183,7 @@ export const driverChat = (t) => {
       <div class="bub bub-card"><p class="mini-h">${g.stampsTitle}</p>${stampsRow(4, 6, g.stampsLabel)}</div>
       <div class="bub bub-me">${g.reply}<span class="bt num">${g.time2}</span></div>
     </div>`;
-  return `<figure class="chat-fig">${phone("10:14", body, "phone-chat")}<figcaption>${sampleTag(t)}</figcaption></figure>`;
+  return `<figure class="chat-fig">${phone("10:14", body, "phone-chat")}</figure>`;
 };
 
 const feedIcon = { service: icon.check, low: icon.drop, gap: icon.scale, fix: icon.edit, daily: icon.sum };
@@ -197,8 +191,7 @@ const feedIcon = { service: icon.check, low: icon.drop, gap: icon.scale, fix: ic
 export const ownerFeed = (t) => {
   const o = t.features.owner;
   return `<figure class="feed-fig"><div class="feed-card"><p class="feed-title">${icon.bell}${o.feedTitle}<span class="pill pill-plain">Telegram</span></p>
-    <ul class="feed">${o.feed.map((m) => `<li class="msg msg-${m.k}"><span class="msg-ic">${feedIcon[m.k]}</span><div><p class="msg-h"><b>${m.t}</b><span class="num">${m.time}</span></p><p>${m.d}</p></div></li>`).join("")}</ul></div>
-    <figcaption>${sampleTag(t)}</figcaption></figure>`;
+    <ul class="feed">${o.feed.map((m) => `<li class="msg msg-${m.k}"><span class="msg-ic">${feedIcon[m.k]}</span><div><p class="msg-h"><b>${m.t}</b><span class="num">${m.time}</span></p><p>${m.d}</p></div></li>`).join("")}</ul></div></figure>`;
 };
 
 // Stock reconciliation: expected vs counted, with the gap shown as something to check.
@@ -217,5 +210,5 @@ export const reconcile = (t) => {
     </div>
     <p class="recon-ok">${icon.check}<span>${r.bottle}</span></p>
     <p class="recon-note">${r.note}</p>
-  </div><figcaption>${sampleTag(t)}</figcaption></figure>`;
+  </div></figure>`;
 };

@@ -50,7 +50,6 @@ ${pageHero(h, actions(t, lang, { secondary: false }))}
       <ol class="stages" start="${g[0] + 1}">${g.map(step).join("")}</ol>
     </div>`
     ).join("")}
-    <p class="sample-inline"><b>${t.ui.sample}</b> · ${t.ui.sampleNote}</p>
   </div>
 </section>
 

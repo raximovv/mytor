@@ -1,4 +1,4 @@
-import { icon, pageHero, sectionHead, voiceDemo, reconcile, driverChat, ownerFeed, ctaBand, plate, sampleTag } from "../components.js";
+import { icon, pageHero, sectionHead, voiceDemo, reconcile, driverChat, ownerFeed, ctaBand, plate } from "../components.js";
 
 const ANCHORS = ["records", "voice", "stock", "owner", "telegram"];
 
@@ -35,7 +35,7 @@ export default function features(t, lang) {
         .map((h) => `<li><span class="h-date">${h.date}</span><span class="h-kind">${h.kind}</span><span class="h-text">${h.text}</span>${h.km ? `<span class="h-km num">${h.km}</span>` : ""}</li>`)
         .join("")}</ol>
     </div>
-  </div><figcaption>${sampleTag(t)}</figcaption></figure>`;
+  </div></figure>`;
 
   const s = f.stock;
   const body = `

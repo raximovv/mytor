@@ -15,8 +15,6 @@ export default {
     nav: { features: "Imkoniyatlar", how: "Qanday ishlaydi", pricing: "Narxlar va pilot", about: "Biz haqimizda" },
     cta: "Demo so‘rash",
     ctaSecondary: "Qanday ishlaydi?",
-    sample: "Interfeys namunasi",
-    sampleNote: "Ism, raqam va summalar xayoliy",
     status: "Ishlab chiqilmoqda",
     more: "Batafsil",
     footer: {
@@ -31,10 +29,10 @@ export default {
 
   meta: {
     siteName: "Mytor",
-    ogAlt: "Mytor: moy almashtirish shoxobchalari uchun dastur. 6 haftalik bepul pilot.",
+    ogAlt: "Mytor: moy almashtirish shoxobchalari uchun dastur. 6 haftalik bepul pilot.",
     home: {
-      title: "Mytor: moy almashtirish shoxobchalari uchun mijozlar va moy hisobi",
-      description: "Moy almashtirish shoxobchalari uchun ishlab chiqilayotgan dastur: mashina tarixi, moy qoldig‘i, haydovchilarga Telegram eslatmalari. Guliston va Sirdaryoda 6 haftalik bepul pilot.",
+      title: "Mytor: moy almashtirish shoxobchalari uchun dastur",
+      description: "Mashina tarixi, moy qoldig‘i va haydovchilarga Telegram eslatmalari bir joyda. Mytor ishlab chiqilmoqda: Guliston va Sirdaryoda 6 haftalik bepul pilot.",
     },
     features: {
       title: "Imkoniyatlar · Mytor",
@@ -46,7 +44,7 @@ export default {
     },
     pricing: {
       title: "Narxlar va pilot · Mytor",
-      description: "Mytor 6 haftalik bepul pilot uchun birinchi shoxobchalarni qidirmoqda. Pilotdan keyingi narxlar hali sinovda: Start, Standart va Tarmoq.",
+      description: "Mytor 6 haftalik bepul pilot uchun birinchi shoxobchalarni qidirmoqda. Pilotdan keyingi narxlar hali sinovda: Start, Standart va Tarmoq.",
     },
     about: {
       title: "Biz haqimizda · Mytor",
@@ -54,7 +52,7 @@ export default {
     },
     demo: {
       title: "Demo so‘rash · Mytor",
-      description: "Mytor demosini so‘rang: bepul va hech narsaga majburlamaydi. Shoxobchangiz misolida ko‘rsatamiz va 6 haftalik bepul pilot haqida gaplashamiz.",
+      description: "Mytor demosini so‘rang: bepul va hech narsaga majburlamaydi. Shoxobchangiz misolida ko‘rsatamiz va 6 haftalik bepul pilot haqida gaplashamiz.",
     },
     privacy: {
       title: "Maxfiylik siyosati · Mytor",
@@ -100,7 +98,6 @@ export default {
     pause: "To‘xtatish",
     restart: "Boshidan",
     stepWord: "qadam",
-    noMic: "Bu namuna mikrofonga ruxsat so‘ramaydi, hech narsa yozib olmaydi va hech qanday yozuvni o‘zgartirmaydi.",
     newService: "Yangi xizmat",
     steps: [
       { title: "Usta gapiradi", text: "Usta tugmani bosib, xizmatni odatdagi so‘zlar bilan aytadi." },
@@ -150,7 +147,6 @@ export default {
     eyebrow: "Moy almashtirish shoxobchalari uchun · Guliston va Sirdaryo",
     title: "Mijoz qaytib keladi, <em>moy&nbsp;hisobi</em> aniq bo‘ladi.",
     lead: "Mytor moy almashtirish shoxobchalari uchun oddiy dastur. Usta xizmatni yozadi, Mytor esa mashina tarixini, moy qoldig‘ini va haydovchiga eslatmani o‘zi yuritadi.",
-    status: "<b>Mytor ishlab chiqilmoqda.</b> Guliston va Sirdaryodan birinchi shoxobchalarni 6 haftalik bepul pilotga taklif qilyapmiz. Demo so‘rash sizni hech narsaga majburlamaydi.",
 
     bridge: {
       eyebrow: "Mytor nima qiladi",
@@ -222,7 +218,7 @@ export default {
 
     support: {
       eyebrow: "Pilot",
-      title: "6 hafta bepul pilot: kelib, joyida sozlab beramiz",
+      title: "6 hafta bepul pilot: kelib, joyida sozlab beramiz",
       lead: "Mytor hali ishlab chiqilmoqda, shuning uchun uni birinchi shoxobchalar bilan birga sinaymiz. Pilot bepul, to‘lov ma’lumotlari so‘ralmaydi, davom etish yoki to‘xtatishni o‘zingiz hal qilasiz.",
       link: "Pilot va narxlar",
       steps: [
@@ -239,7 +235,7 @@ export default {
       items: [
         { q: "Mytor allaqachon ishlayaptimi?", a: "Yo‘q. Mytor hozir ishlab chiqilmoqda. Saytdagi barcha ekranlar interfeys namunalari. Biz bir nechta shoxobcha bilan birga pilot o‘tkazishni rejalashtiryapmiz." },
         { q: "Demo so‘rasam, sotib olishim shartmi?", a: "Yo‘q. Demo bepul va hech narsaga majburlamaydi. Ko‘rib chiqasiz, savollaringizni berasiz, keyin pilotga qo‘shilish yoki qo‘shilmaslikni o‘zingiz hal qilasiz." },
-        { q: "Pilot qancha turadi?", a: "Taklifimiz: 6 hafta, bepul. Saytda to‘lov qabul qilinmaydi. Pilotdan keyingi narxlar hali sinovda va pilot ishtirokchilari bilan birga belgilanadi." },
+        { q: "Pilot qancha turadi?", a: "Taklifimiz: 6 hafta, bepul. Saytda to‘lov qabul qilinmaydi. Pilotdan keyingi narxlar hali sinovda va pilot ishtirokchilari bilan birga belgilanadi." },
         { q: "Telefonga alohida ilova o‘rnatish kerakmi?", a: "Birinchi versiya telefon va kompyuter brauzerida ochiladigan veb-ilova sifatida rejalashtirilgan. Haydovchilarga eslatmalar Telegram orqali boradi." },
         { q: "Ustalarim texnikaga unchalik qiziqmaydi. Ular uddalay oladimi?", a: "Mytor shu sababli oddiy qilib loyihalanmoqda: raqam bo‘yicha qidiruv, ovozli kiritish va bitta tasdiqlash tugmasi. Sozlash va o‘rgatishni joyida o‘zimiz qilamiz." },
         { q: "Qoldiqda farq chiqsa, demak, kimdir o‘g‘irlaganmi?", a: "Shart emas. Farqning sababi yozilmay qolgan xizmat, to‘kilish yoki noto‘g‘ri sanoq bo‘lishi mumkin. Mytor farqni ko‘rsatadi va tuzatishlarni qayd etadi, xulosani esa siz chiqarasiz." },
@@ -433,7 +429,7 @@ export default {
       ],
     },
     pilot: {
-      title: "Shoxobchangizda 6 hafta bepul sinab ko‘ring",
+      title: "Shoxobchangizda 6 hafta bepul sinab ko‘ring",
       text: "Pilot qanday o‘tishini va sinovdagi narxlarni ko‘ring.",
       link: "Narxlar va pilot",
     },
@@ -441,9 +437,9 @@ export default {
 
   pricing: {
     eyebrow: "Narxlar va pilot",
-    title: "Avval 6 hafta bepul sinab ko‘ring",
+    title: "Avval 6 hafta bepul sinab ko‘ring",
     lead: "Mytor hali ishlab chiqilmoqda va biz birinchi pilot shoxobchalarini qidiryapmiz. Pilotda Mytor’ni oddiy ish kuningizda birga sinaymiz. Pilot bepul, to‘lov olinmaydi.",
-    facts: ["6 hafta", "Bepul", "Majburiyatsiz"],
+    facts: ["6 hafta", "Bepul", "Majburiyatsiz"],
     ctaNote: "Demo so‘rash sizni pilotga yoki xaridga majburlamaydi.",
     proposal: "Narxlar sinovda · hali yakuniy emas",
     pilotTitle: "Pilot qanday o‘tadi",
@@ -511,7 +507,7 @@ export default {
   form: {
     eyebrow: "Demo so‘rash",
     title: "Mytor’ni shoxobchangiz misolida ko‘ring",
-    lead: "Ismingiz va telefoningizni qoldiring, qo‘ng‘iroq qilib, demo uchun qulay vaqtni kelishamiz. Mytor hali ishlab chiqilmoqda: demoda nimalar tayyorlanayotganini ko‘rsatamiz va 6 haftalik bepul pilot haqida gaplashamiz.",
+    lead: "Ismingiz va telefoningizni qoldiring, qo‘ng‘iroq qilib, qulay vaqtni kelishamiz. Demoda ishlab chiqilayotgan Mytor’ni ko‘rsatamiz va 6 haftalik bepul pilot haqida gaplashamiz.",
     facts: ["Bepul", "Majburiyatsiz", "O‘zbek yoki rus tilida"],
     legend: "So‘rov ma’lumotlari",
     requiredNote: "* bilan belgilangan maydonlar majburiy",
@@ -547,7 +543,7 @@ export default {
     next: {
       title: "Keyin nima bo‘ladi?",
       steps: ["So‘rovingizni ko‘rib chiqamiz.", "Qulay vaqtni kelishish uchun telefon qilamiz.", "Demoni shoxobchangizda yoki onlayn ko‘rsatamiz."],
-      note: "Demo va 6 haftalik pilot bepul. To‘lov yoki karta ma’lumotlari so‘ralmaydi, davom etish o‘zingizning qaroringiz.",
+      note: "Demo va 6 haftalik pilot bepul. To‘lov yoki karta ma’lumotlari so‘ralmaydi, davom etish o‘zingizning qaroringiz.",
     },
   },
 
@@ -561,7 +557,7 @@ export default {
       { h: "Ma’lumotlar qayerga boradi", p: "Hozircha forma hech qanday serverga ulanmagan: saytda to‘ldirilgan ma’lumotlar yuborilmaydi va saqlanmaydi. Forma ulanganidan keyin bu yerda so‘rovlar qayerda saqlanishi va ularni kim ko‘rishi aniq yoziladi." },
       { h: "Nima uchun ishlatamiz", p: "Faqat so‘rovingiz bo‘yicha siz bilan bog‘lanish hamda demo yoki pilotni tashkil qilish uchun. Ma’lumotlaringizni sotmaymiz va reklama tarqatish uchun ishlatmaymiz." },
       { h: "Qancha saqlaymiz", p: "So‘rov ko‘rib chiqilib, siz bilan muloqot yakunlangunga qadar. Pilotga qo‘shilmasangiz, ma’lumotlaringizni o‘chirishni so‘rashingiz mumkin." },
-      { h: "Cookie va kuzatuv", p: "Bu sayt cookie-fayllar va analitika vositalaridan foydalanmaydi. Shriftlar Google Fonts xizmatidan yuklanadi, shu sababli brauzeringiz Google serverlariga murojaat qiladi." },
+      { h: "Cookie va kuzatuv", p: "Bu sayt cookie-fayllar va analitika vositalaridan foydalanmaydi. Tanlagan tilingiz faqat brauzeringizning o‘zida eslab qolinadi va bizga yuborilmaydi. Shriftlar Google Fonts xizmatidan yuklanadi, shu sababli brauzeringiz Google serverlariga murojaat qiladi." },
       { h: "Haydovchilar ma’lumotlari", p: "Mytor ishga tushganda haydovchilarning telefon raqami va mashina ma’lumotlari faqat xizmat tarixi va eslatmalar uchun ishlatilishi rejalashtirilgan. Telegram xabarlari haydovchining roziligi bilan yuboriladi va istalgan vaqtda o‘chirib qo‘yilishi mumkin." },
       { h: "Sizning huquqlaringiz", p: "O‘zingiz haqingizdagi ma’lumotlarni ko‘rish, tuzatish yoki o‘chirishni so‘rashingiz mumkin. Buni siz bilan bog‘langanimizda ayting." },
       { h: "Qonunchilik", p: "Ma’lumotlarni qayta ishlashning O‘zbekiston Respublikasining «Shaxsga doir ma’lumotlar to‘g‘risida»gi Qonuniga muvofiqligi ishga tushirishdan oldin tekshiriladi." },
@@ -577,7 +573,7 @@ export default {
       home: "Bosh sahifa: Mytor nima va kimlar uchun",
       features: "Imkoniyatlar: tarix, moy hisobi, Telegram, ovozli kiritish",
       how: "Qanday ishlaydi: bitta xizmat boshidan oxirigacha",
-      pricing: "Narxlar va pilot: 6 hafta bepul sinov taklifi",
+      pricing: "Narxlar va pilot: 6 hafta bepul sinov taklifi",
       demo: "Demo so‘rash: so‘rov qoldirish",
     },
     other: "Русская версия сайта",
