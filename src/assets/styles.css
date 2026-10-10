@@ -1,4 +1,4 @@
-/* Mytor marketing site — warm paper, navy ink, restrained amber "oil". */
+/* Mytor marketing site — warm paper, deep-blue bands, restrained amber "oil". */
 :root {
   --paper: #F6F1E7;
   --paper-2: #EEE5D4;
@@ -14,10 +14,10 @@
   --amber-ink: #8A5300;
   --amber-soft: #F8E6C4;
   --stamp: #B4561B;
-  --navy: #172033;
-  --navy-2: #222D44;
+  --navy: #0B2350;
+  --navy-2: #15326A;
   --on-navy: #F6F1E7;
-  --on-navy-muted: #BCC2CE;
+  --on-navy-muted: #B9C6DC;
   --good: #2A7449;
   --good-soft: #DCEFE1;
   --bad: #A83526;
@@ -94,7 +94,7 @@ main:focus { outline: none; }
 .hdr { display: flex; align-items: center; gap: 20px; min-height: 68px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font: 800 1.4rem/1 var(--f-display); letter-spacing: -.03em; color: var(--ink); text-decoration: none; flex: none; }
 .brand-light { color: var(--on-navy); }
-.brand-light .logo-mark rect { fill: #2C3954; }
+.brand-light .logo-mark path { fill: var(--on-navy); }
 .nav-list { list-style: none; display: flex; gap: 2px; }
 .nav-list a { display: block; padding: .5em .8em; border-radius: 9px; color: var(--ink-2); font-weight: 560; text-decoration: none; }
 .nav-list a:hover { background: var(--paper-2); color: var(--ink); }
