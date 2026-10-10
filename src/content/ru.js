@@ -15,6 +15,8 @@ export default {
     nav: { features: "Возможности", how: "Как это работает", pricing: "Цены и пилот", about: "О нас" },
     cta: "Запросить демо",
     ctaSecondary: "Как это работает?",
+    download: "Скачать",
+    soon: "Скоро",
     status: "В разработке",
     more: "Подробнее",
     footer: {

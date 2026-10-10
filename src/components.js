@@ -26,6 +26,7 @@ export const icon = {
   menu: svg('<path d="M4 7h16M4 12h16M4 17h16"/>'),
   close: svg('<path d="M6 6l12 12M18 6L6 18"/>'),
   box: svg('<path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5v-9zM3.5 7.5L12 12l8.5-4.5M12 12v9"/>'),
+  download: svg('<path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/>'),
   book: svg('<path d="M5 4.5h11a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3V4.5zM5 17a3 3 0 0 1 3-3h11"/>'),
 };
 
@@ -47,10 +48,6 @@ export const stamp = (text, cls = "", mark = "check") => {
       : `<text x="60" y="70" text-anchor="middle" font-size="27" font-weight="800" fill="currentColor" font-family="JetBrains Mono, monospace">${mark}</text>`;
   return `<svg class="stamp ${cls}" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><defs><path id="${id}" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 3"/><text font-size="10" font-weight="700" letter-spacing="1.2" fill="currentColor" font-family="JetBrains Mono, monospace"><textPath href="#${id}" textLength="270" lengthAdjust="spacing">${text}</textPath></text>${center}</svg>`;
 };
-
-// Large decorative stamp ring behind the hero phone.
-export const ring = (text) =>
-  `<svg class="hero-ring" viewBox="0 0 400 400" aria-hidden="true" focusable="false"><defs><path id="hero-ring-path" d="M200,200 m-168,0 a168,168 0 1,1 336,0 a168,168 0 1,1 -336,0"/></defs><circle cx="200" cy="200" r="194" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="200" cy="200" r="146" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 6"/><text font-size="17" font-weight="700" letter-spacing="3" fill="currentColor" font-family="JetBrains Mono, monospace"><textPath href="#hero-ring-path" textLength="1040" lengthAdjust="spacing">${text}</textPath></text></svg>`;
 
 export const stampsRow = (filled, total = 6, label = "") =>
   `<div class="stamps" role="img" aria-label="${label}">${Array.from({ length: total }, (_, i) => `<span class="${i < filled ? "on" : ""}">${i < filled ? icon.check : i + 1}</span>`).join("")}</div>`;
@@ -85,33 +82,15 @@ export const ctaBand = (t, lang, current = "") =>
 
 /* ---------- product previews ---------- */
 
-// Hero: voice becomes a stamped record, plus a matching owner notification.
-export const heroPhone = (t) => {
-  const h = t.phoneHero;
-  const body = `
-    <div class="scr">
-      <div class="scr-row"><span class="scr-title">${h.card}</span>${plate("20 D 477 BB")}</div>
-      <p class="scr-car">${t.sample.car}</p>
-      <dl class="draft">${h.rows.map(([k, v], i) => `<div class="frow ${i === 1 ? "is-fixed" : "is-ok"}"><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
-      <div class="rec-foot"><div class="mini-ok">${icon.check}<span>${h.history}</span></div>${stamp(h.stamp, "rec-stamp rec-stamp-inline")}</div>
-      <div class="mini-stock"><span>${h.stock}</span><span class="num"><s>${t.demo.stockFrom}</s> → <b>${t.demo.stockTo}</b></span></div>
-    </div>`;
-  return `<figure class="hero-fig">
-    ${ring(h.ring)}
-    <div class="say-bubble">${icon.mic}<span>${h.say}</span></div>
-    ${phone("14:32", body, "phone-hero")}
-    <div class="notify-card hero-notify">${icon.bell}<div><b>${h.notifyFrom}</b><span>${h.notifyText}</span></div></div>
-  </figure>`;
-};
-
 const frow = (label, value, state = "ok", note = "") =>
   `<div class="frow is-${state}"><dt>${label}</dt><dd>${value}${note ? ` <span class="fnote">${note}</span>` : ""}</dd></div>`;
 
-// Voice entry: speak → draft → clarify → confirm → history & stock. Illustrative only.
-export const voiceDemo = (t, idBase = "vd") => {
+// The five voice-entry screens: speak → draft → clarify → confirm → history & stock. Illustrative only.
+// Each call renders fresh stamps (unique ids), so a page can show the screens twice.
+export const voiceScreens = (t) => {
   const d = t.demo, f = d.fields, v = d.values;
   const vehicle = `${plate("20 D 477 BB")} <span class="fsub">${t.sample.car} · ${v.vehicleFound}</span>`;
-  const screens = [
+  return [
     `<div class="scr-title">${d.newService}</div>
      <div class="listen"><span class="mic-btn">${icon.mic}</span><span class="wave" aria-hidden="true">${"<i></i>".repeat(13)}</span><span class="listen-text">${d.listening}</span></div>
      <p class="transcript">${d.transcript}</p>`,
@@ -148,6 +127,12 @@ export const voiceDemo = (t, idBase = "vd") => {
      <div class="mini-card"><p class="mini-h">${icon.book}${d.history}</p><p>${d.historyEntry}</p><p class="scr-note">${d.driverNote}</p></div>
      <div class="mini-card"><p class="mini-h">${icon.drop}${d.stock}</p><p class="num stock-move"><s>${d.stockFrom}</s>${icon.arrow}<b>${d.stockTo}</b></p><div class="lvl" aria-hidden="true"><i style="--from:62%;--to:59%"></i></div></div>`,
   ];
+};
+
+// Voice entry demo with step buttons (features page).
+export const voiceDemo = (t, idBase = "vd") => {
+  const d = t.demo;
+  const screens = voiceScreens(t);
   return `<div class="vdemo" data-vdemo role="region" aria-label="${d.region}">
     <div class="vdemo-stage">
       <figure class="vdemo-fig">

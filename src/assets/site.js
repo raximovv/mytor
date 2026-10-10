@@ -92,6 +92,95 @@
     show(1, false);
   });
 
+  /* ---------- home hero app: loops listening → saved record → stamp → owner message ---------- */
+  // Holds on the finished record, fades and starts again. Pauses off screen, in a hidden tab, or when the
+  // person presses pause (WCAG 2.2.2). Without JS or with reduced motion the CSS shows the saved record.
+  var io = "IntersectionObserver" in window;
+  $$("[data-app]").forEach(function (fig) {
+    var btn = $("[data-app-toggle]", fig);
+    if (reduceMotion || !btn) return;
+
+    // Transcript appears word by word.
+    $$("[data-words]", fig).forEach(function (el) {
+      var parts = el.textContent.split(/( +)/);
+      var n = 0;
+      el.textContent = "";
+      parts.forEach(function (part) {
+        if (/^ *$/.test(part)) { el.appendChild(document.createTextNode(part)); return; }
+        var w = document.createElement("span");
+        w.className = "w";
+        w.style.setProperty("--i", n++);
+        w.textContent = part;
+        el.appendChild(w);
+      });
+      el.classList.add("is-ready");
+    });
+
+    var label = $("[data-label]", btn);
+    var CYCLE = 8000, FADE = 450; // ~5.5 s sequence + 2.5 s on the finished record
+    var timer = null, startedAt = 0, left = CYCLE;
+    var started = false, paused = false, held = false, inView = !io;
+
+    function schedule(ms) { clearTimeout(timer); left = ms; startedAt = Date.now(); timer = setTimeout(restart, ms); }
+    function restart() {
+      fig.classList.add("is-out");
+      timer = setTimeout(function () {
+        fig.removeAttribute("data-run");
+        void fig.offsetWidth; // restart the CSS animations
+        fig.classList.remove("is-out");
+        fig.setAttribute("data-run", "");
+        schedule(CYCLE);
+      }, FADE);
+    }
+    function pause() {
+      if (paused || !started) return;
+      paused = true;
+      fig.classList.add("is-paused");
+      clearTimeout(timer);
+      left = Math.max(0, left - (Date.now() - startedAt));
+    }
+    function play() {
+      if (!started) { started = true; fig.setAttribute("data-run", ""); schedule(CYCLE); return; }
+      if (!paused) return;
+      paused = false;
+      fig.classList.remove("is-paused", "is-out");
+      schedule(left);
+    }
+    function sync() { if (inView && !held && !document.hidden) play(); else pause(); }
+
+    btn.hidden = false;
+    btn.addEventListener("click", function () {
+      held = !held;
+      fig.classList.toggle("is-held", held);
+      label.textContent = held ? btn.dataset.labelPlay : btn.dataset.labelPause;
+      sync();
+    });
+    document.addEventListener("visibilitychange", sync);
+    // Start once the fonts are in and the phone is on screen (below the fold on phones).
+    var begin = function () {
+      if (!io) { sync(); return; }
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; sync(); }, { threshold: 0.35 }).observe(fig);
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(begin); else begin();
+  });
+
+  /* ---------- home voice story: the pinned phone follows the step in the middle of the screen ---------- */
+  $$("[data-story]").forEach(function (root) {
+    if (!io) return;
+    var steps = $$(".story-step", root);
+    var screens = $$("[data-screen]", root);
+    var notify = $("[data-story-notify]", root);
+    var set = function (n) {
+      steps.forEach(function (s, i) { s.classList.toggle("is-active", i + 1 === n); });
+      screens.forEach(function (s, i) { s.classList.toggle("is-active", i + 1 === n); });
+      notify.classList.toggle("is-on", n === steps.length);
+    };
+    var so = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) set(+e.target.dataset.step); });
+    }, { rootMargin: "-48% 0px -48% 0px" });
+    steps.forEach(function (s) { so.observe(s); });
+  });
+
   /* ---------- sample lookup (filters fictional rows on the page) ---------- */
   var lookupInput = $("[data-lookup-input]");
   if (lookupInput) {

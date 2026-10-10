@@ -2,7 +2,7 @@
 // (headless Chrome/Edge via DevTools protocol; no dependencies; Node 22+).
 //   node scripts/journey.js [baseUrl] [--expect=not-connected|success|error] [--mock=http://localhost:4400]
 // Home → mobile menu → pricing → FAQ → "Demo so‘rash" → form errors → fixed form → submit → result,
-// plus the voice demo, sample lookup, language switch and the remembered language on the homepage.
+// plus the hero app loop, voice story, voice demo, sample lookup, language switch and the remembered language on the homepage.
 // --expect must match how the site was built (no endpoint = not-connected). Only use fictional test data:
 // with a real endpoint configured, every run sends a test request there.
 import { spawn } from "node:child_process";
@@ -117,8 +117,28 @@ for (const t of [uz, ru]) {
   ok(!(await ev(`/interfeys namunasi|пример интерфейса/i.test(document.querySelector("main").innerText) || !!document.querySelector(".status-note, .sample-tag, .vnote")`)), "no demo/sample labels on the page itself");
   ok(/interfeys namunasi|пример интерфейса/i.test(await text(".site-footer")), "footer still notes screens are examples");
   ok(await ev(`document.querySelectorAll("main > section").length`) <= 9, "homepage kept to 8 sections + CTA");
+  ok(await inView(".hero-proof"), "free pilot (6 weeks · free · no commitment) visible without scrolling");
+  ok(!(await ev(`!!document.querySelector(".hero .cta-soon a, a.cta-soon")`)), "download marked as coming soon, not a link");
 
-  // Voice demo: step through on the phone, caption follows.
+  // Hero app loops; the pause button stops and resumes it.
+  await tap("[data-app-toggle]");
+  ok((await text("[data-app-toggle] [data-label]")) === t.demo.play && (await ev(`document.querySelector("[data-app]").classList.contains("is-held")`)), "hero app: pause stops the loop");
+  await tap("[data-app-toggle]");
+  ok((await text("[data-app-toggle] [data-label]")) === t.demo.pause && !(await ev(`document.querySelector("[data-app]").classList.contains("is-held")`)), "hero app: second tap resumes");
+
+  // Voice story: on a phone every step shows its own screen.
+  ok((await ev(`document.querySelectorAll("#voice .story-step").length`)) === 5, "voice story: 5 steps");
+  ok(await visible('#voice .story-step[data-step="5"] .story-inline'), "voice story: step screens shown inline on the phone");
+
+  // FAQ opens and closes.
+  await tap("#faq-h ~ .faq details:nth-of-type(2) summary, .faq details:nth-of-type(2) summary");
+  ok(await ev(`document.querySelectorAll(".faq details")[1].open`), "FAQ: tap opens the answer");
+  ok(/(majburlamaydi|не обязывает)/.test(await ev(`document.querySelectorAll(".faq details")[1].textContent`)), "FAQ: no-commitment answer present");
+  await tap(".faq details:nth-of-type(2) summary");
+  ok(!(await ev(`document.querySelectorAll(".faq details")[1].open`)), "FAQ: second tap closes it");
+
+  // Voice demo (features page): step through on the phone, caption follows.
+  await go(P + "features/");
   for (let i = 0; i < 4; i++) await tap("#voice [data-vnext]");
   ok((await ev(`document.querySelector('#voice .vstep[aria-current="step"]').dataset.goto`)) === "5", "voice demo: Next reaches step 5");
   ok((await text("#voice [data-vcap] b")).startsWith("5/5"), "voice demo: visible step caption updates on phone");
@@ -129,14 +149,8 @@ for (const t of [uz, ru]) {
   await tap('#voice .vstep[data-goto="3"]');
   ok((await text("#voice [data-vlive]")).startsWith("3/5"), "voice demo: step change announced to screen readers");
 
-  // FAQ opens and closes.
-  await tap("#faq-h ~ .faq details:nth-of-type(2) summary, .faq details:nth-of-type(2) summary");
-  ok(await ev(`document.querySelectorAll(".faq details")[1].open`), "FAQ: tap opens the answer");
-  ok(/(majburlamaydi|не обязывает)/.test(await ev(`document.querySelectorAll(".faq details")[1].textContent`)), "FAQ: no-commitment answer present");
-  await tap(".faq details:nth-of-type(2) summary");
-  ok(!(await ev(`document.querySelectorAll(".faq details")[1].open`)), "FAQ: second tap closes it");
-
   // Mobile menu: open, Escape closes and returns focus, then go to pricing.
+  await go(P);
   await ev(`scrollTo(0, 0)`);
   await tap(".menu-btn");
   ok((await ev(`document.querySelector(".menu-btn").getAttribute("aria-expanded")`)) === "true" && (await visible("#site-nav")), "menu opens");

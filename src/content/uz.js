@@ -15,6 +15,8 @@ export default {
     nav: { features: "Imkoniyatlar", how: "Qanday ishlaydi", pricing: "Narxlar va pilot", about: "Biz haqimizda" },
     cta: "Demo so‘rash",
     ctaSecondary: "Qanday ishlaydi?",
+    download: "Yuklab olish",
+    soon: "Tez orada",
     status: "Ishlab chiqilmoqda",
     more: "Batafsil",
     footer: {
