@@ -70,8 +70,8 @@ export default {
     nav: { problem: "Muammo va yechim", team: "Jamoa", roadmap: "Yo'l xaritasi", build: "Amalga oshirish" },
     audience: "Moy almashtirish shoxobchalari uchun. Guliston va Sirdaryodan boshlaymiz.",
     deckLink: "Pitch deckni ochish",
-    problemTitle: "Muammo → Yechim",
-    problemLead: "Qog'ozdagi yozuvlar xizmat tarixi, moy sarfi va keyingi tashrifni bir-biriga bog'lamaydi. Mytor shu ishlarni bitta oqimga birlashtirish uchun yaratilmoqda.",
+    problemTitle: "Daftardagi yozuvlar bilan nazorat qilish qiyin",
+    problemLead: "Qog'ozdagi daftarlar moy sarfini ham, mijozlarning qaytib kelishini ham aniq ko'rsatmaydi. Mytor bu muammolarni bitta oddiy tizimda hal qiladi.",
     solutionTitle: "Bitta xizmat yozuvi. Uchta natija.",
     solutionLead: "Usta mashinani topadi, xizmatni yozadi va tasdiqlaydi. Rejalashtirilgan tizim shu yozuvdan tarix, moy hisobi va eslatmalarni yangilaydi.",
     team: {
@@ -97,8 +97,8 @@ export default {
       ],
     },
     roadmap: {
-      title: "G'oyadan kundalik ishga",
-      lead: "Hozirgi bosqich: interaktiv UI prototip. Ishlaydigan MVP va ommaviy ishga tushirish keyingi bosqichlar.",
+      title: "G'oyadan amaliyotgacha",
+      lead: "Hozirda loyihaning interaktiv prototipi tayyor. Keyingi bosqich - dasturni amalda sinab ko'rish va ishga tushirish.",
       stages: [
         { name: "Idea", status: "Tayyor", text: "Moy hisobi va mijozning qaytishi muammosi, yechim konsepti va pitch deck shakllantirildi." },
         { name: "Prototype", status: "Hozir", text: "Sayt va interaktiv xizmat yozish namunasi. Hozircha haqiqiy ma'lumotlar saqlanmaydi." },
@@ -107,8 +107,8 @@ export default {
       ],
     },
     build: {
-      title: "Yechimni qanday yaratamiz?",
-      lead: "Avval xizmat yozish va hisobning asosiy oqimi. Keyin AI yordamida kiritishni tezlashtirish va pilot natijalariga ko'ra kengaytirish.",
+      title: "Tizim qanday ishlab chiqilmoqda?",
+      lead: "Dastlab xizmat va moy hisobining asosiy funksiyalari yaratiladi. So'ngra usta ishini yengillashtirish uchun sun'iy intellekt (ovozli kiritish) qo'shiladi.",
       steps: [
         { title: "Muammoni joyida tekshirish", text: "Shoxobcha egasi va ustalar bilan suhbat; hozirgi yozuvlar, litr hisobi va eslatmalar jarayonini o'rganish.", tech: "Suhbatlar · Canva · UI prototip" },
         { title: "Asosiy MVPni qurish", text: "Mijoz, mashina, xizmat va moy kirim-sarfini bog'lash. Egasi va usta rollari, tasdiqlangan yozuv hamda tuzatish tarixini yaratish.", tech: "TypeScript · React · Node.js · PostgreSQL" },
@@ -119,8 +119,8 @@ export default {
       used: ["Next.js", "React", "TypeScript", "Cloudflare"],
       plannedTitle: "MVP uchun rejalashtirilgan",
       planned: ["Node.js", "PostgreSQL", "Telegram Bot API", "Speech-to-text / LLM / OCR"],
-      aiToolsTitle: "AI vositalaridan foydalanish rejasi",
-      aiTools: "Codex va Claude: kod qoralamalari, tekshiruv va tez prototiplashga yordam. Mahsulotdagi AI xizmat yozuvi qoralamasini tayyorlaydi; yakuniy tasdiq ustada qoladi. Provayderlar pilotda o'zbekcha va ruscha aniqlik, xarajat va tezlik bo'yicha tanlanadi.",
+      aiToolsTitle: "AI qanday yordam beradi?",
+      aiTools: "Ovozli buyruqlarni matnga o'girib, xizmat qoralamasini avtomatik to'ldiradi. Xatolik bo'lmasligi uchun yakuniy tasdiqlash har doim ustaning o'zida qoladi.",
     },
     demo: {
       title: "Mytor qanday ishlaydi?",
@@ -274,7 +274,7 @@ export default {
         {
           topic: "Nazorat",
           before: "Nima bo'lganini kechqurun so'rab bilasiz",
-          after: "Asoschi har bir xizmat haqida darhol xabar oladi",
+          after: "Shoxobcha egasi har bir xizmat haqida Telegram'da darhol xabar oladi",
         },
       ],
     },
