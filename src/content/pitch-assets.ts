@@ -3,7 +3,7 @@
 type DemoVideo = { kind: "embed" | "file"; src: string; watchUrl?: string };
 
 export const PITCH_ASSETS = {
-  deck: "https://something-claude.my.canva.site/",
+  deck: "https://something-claude.my.canva.site/mytor-pitch",
   video: null as DemoVideo | null,
   prototype: "", // Optional external working product; the local UI walkthrough is separate.
 };
