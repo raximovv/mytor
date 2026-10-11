@@ -1,4 +1,4 @@
-// Renders the social-preview images (og-uz.png, og-ru.png) and apple-touch-icon.png into src/assets/
+// Renders the social-preview images (og-uz.png, og-ru.png) and apple-touch-icon.png into public/assets/
 // with headless Chrome/Edge (no dependencies; Node 22+). Re-run after changing the headline copy:
 //   node scripts/images.js
 import { spawn } from "node:child_process";
@@ -8,10 +8,11 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import uz from "../src/content/uz.js";
 import ru from "../src/content/ru.js";
-import { logo, logoPath } from "../src/components.js";
+import { LOGO_PATH as logoPath } from "../src/lib/logo.js";
+const logo = `<svg class="logo-mark" viewBox="0 12 100 76" width="40" height="30" aria-hidden="true"><path fill="#01377F" fill-rule="evenodd" d="${logoPath}"/></svg>`;
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const assets = join(root, "src", "assets");
+const assets = join(root, "public", "assets");
 const browserPath = [
   process.env.CHROME_PATH,
   "C:/Program Files/Google/Chrome/Application/chrome.exe",
@@ -26,15 +27,15 @@ const fonts = `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?fa
 
 const og = (t) => `<!doctype html><html><head><meta charset="utf-8">${fonts}<style>
   * { margin: 0; box-sizing: border-box; }
-  body { width: 1200px; height: 630px; overflow: hidden; background: #F6F1E7; color: #1A2230; font-family: Onest, sans-serif; position: relative; }
-  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: #E39B2D; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #FAF8F4; color: #141821; font-family: Onest, sans-serif; position: relative; }
+  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: #F2932B; }
   .brand { position: absolute; left: 80px; top: 70px; display: flex; align-items: center; gap: 16px; font: 800 44px/1 Geologica, sans-serif; letter-spacing: -.03em; }
   .brand svg { width: 78px; height: 58px; }
-  h1 { position: absolute; left: 80px; top: 178px; width: 720px; font: 800 66px/1.04 Geologica, sans-serif; letter-spacing: -.03em; }
-  h1 em { font-style: normal; box-shadow: inset 0 -.2em 0 #E39B2D; }
+  h1 { position: absolute; left: 80px; top: 178px; width: 720px; font: 700 64px/1.05 Geologica, sans-serif; letter-spacing: -.03em; }
+  h1 em { font-style: normal; color: #984800; }
   .pilot { position: absolute; left: 80px; bottom: 74px; display: flex; gap: 12px; }
-  .pilot span { font: 600 26px/1 Onest, sans-serif; background: #FFFCF6; border: 2px solid #DCD2BF; border-radius: 99px; padding: 14px 22px; }
-  .pilot span:first-child { background: #0B2350; border-color: #0B2350; color: #F6F1E7; }
+  .pilot span { font: 600 26px/1 Onest, sans-serif; background: #FFFFFF; border: 2px solid #E3DDD2; border-radius: 99px; padding: 14px 22px; }
+  .pilot span:first-child { background: #141821; border-color: #141821; color: #FAF8F4; }
   .hero-mark { position: absolute; right: -70px; top: 70px; width: 520px; opacity: .1; }
 </style></head><body>
   <svg class="hero-mark" viewBox="0 0 100 100"><path fill="#01377F" fill-rule="evenodd" d="${logoPath}"/></svg>
@@ -79,7 +80,7 @@ for (const [name, html, width, height] of JOBS) {
   await send("Runtime.evaluate", { expression: `(async () => { for (let i = 0; i < 80 && document.fonts.size === 0; i++) await new Promise(r => setTimeout(r, 100)); await Promise.all(["800 40px Geologica", "600 20px Onest", "700 16px \\"JetBrains Mono\\""].map(f => document.fonts.load(f, "Mo‘ж"))); await document.fonts.ready; await new Promise(r => setTimeout(r, 300)); })()`, awaitPromise: true });
   const { data } = await send("Page.captureScreenshot", { format: "png", clip: { x: 0, y: 0, width, height, scale: 1 } });
   writeFileSync(join(assets, name), Buffer.from(data, "base64"));
-  console.log(`saved src/assets/${name}`);
+  console.log(`saved public/assets/${name}`);
 }
 ws.close();
 chrome.kill();

@@ -1,13 +1,15 @@
-// Static checks on dist/: translation parity, links, metadata, headings, labels, forbidden claims.
+// Static checks on out/ (the Next.js static export): translation parity, links, metadata, headings, labels,
+// forbidden claims and the demo strip. Run after `npm run build` (`npm run check` does both).
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import uz from "../src/content/uz.js";
 import ru from "../src/content/ru.js";
-import { BASE } from "../src/routes.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const dist = join(root, "dist");
+const dist = join(root, "out");
+// Same base path the build used (next.config.mjs): "" or "/mytor".
+const BASE = (process.env.MYTOR_BASE_PATH || "").replace(/\/+$/, "").replace(/^(?=[^/])/, "/");
 const problems = [];
 const fail = (m) => problems.push(m);
 
@@ -29,12 +31,12 @@ const files = [];
 (function walk(d) {
   for (const f of readdirSync(d)) {
     const p = join(d, f);
-    statSync(p).isDirectory() ? walk(p) : files.push(p);
+    if (statSync(p).isDirectory()) { if (!/^(_next|__next\.)/.test(f)) walk(p); } else files.push(p);
   }
 })(dist);
 const html = files.filter((f) => f.endsWith(".html"));
 
-// Site URL ("/mytor/ru/") -> path inside dist/ ("/ru/"); null when it points outside the site.
+// Site URL ("/ru/", or "/mytor/ru/" with a base path) -> path inside out/ ("/ru/"); null when it points outside the site.
 const local = (href) => (href.startsWith(BASE + "/") ? href.slice(BASE.length) : null);
 
 const resolves = (href) => {
@@ -66,11 +68,11 @@ for (const file of html) {
   const expectRu = rel.startsWith("ru/");
   if ((lang === "ru") !== expectRu) fail(`${rel}: lang=${lang} does not match path`);
   if (!/<title>[^<]{10,}<\/title>/.test(src)) fail(`${rel}: missing/short <title>`);
-  if (!/<meta name="description" content="[^"]{40,}">/.test(src)) fail(`${rel}: missing/short meta description`);
+  if (!/<meta name="description" content="[^"]{40,}"\s*\/?>/.test(src)) fail(`${rel}: missing/short meta description`);
   const h1 = (src.match(/<h1[\s>]/g) || []).length;
   if (h1 !== 1) fail(`${rel}: ${h1} <h1> elements`);
   if (!rel.endsWith("404.html")) {
-    for (const hl of ["uz", "ru", "x-default"]) if (!src.includes(`hreflang="${hl}"`)) fail(`${rel}: missing hreflang ${hl}`);
+    for (const hl of ["uz", "ru", "x-default"]) if (!new RegExp(`hreflang="${hl}"`, "i").test(src)) fail(`${rel}: missing hreflang ${hl}`);
   }
   // Internal links and assets resolve.
   for (const m of src.matchAll(/(?:href|src)="(\/[^"]*)"/g)) if (!resolves(m[1])) fail(`${rel}: broken link ${m[1]}`);
@@ -106,8 +108,8 @@ for (const file of html) {
   // Style rules: no eyebrow badges above headlines, no em dashes in titles/descriptions.
   if (/class="eyebrow"/.test(src)) fail(`${rel}: eyebrow badge above a headline`);
   if (/<title>[^<]*—|content="[^"]*—/.test(src)) fail(`${rel}: em dash in title/description`);
-  // Pages with previews carry the footer note that screens are examples with fictional data.
-  if (/class="phone /.test(src) && !/interfeys namunasi|пример интерфейса/i.test(src)) fail(`${rel}: phone preview without the "screens are examples" note`);
+  // Every page carries the fixed "site is a demo" strip (the site's disclosure since the status notes were removed).
+  if (!/class="demo-bar"/.test(src)) fail(`${rel}: missing the "site is a demo" strip`);
 }
 
 // 3. Language switch keeps the equivalent page.

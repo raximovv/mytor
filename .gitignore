@@ -1,3 +1,11 @@
-dist/
 node_modules/
+.next/
+out/
+dist/
+legacy-static/dist/
+.wrangler/
+*.tsbuildinfo
 .env*
+next-env.d.ts
+# Redesign before/after evidence (large; kept locally)
+screenshots/redesign/

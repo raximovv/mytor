@@ -18,10 +18,10 @@ export default {
     download: "Yuklab olish",
     soon: "Tez orada",
     status: "Ishlab chiqilmoqda",
+    demoBar: "Sayt demo versiyada",
     more: "Batafsil",
     footer: {
       tagline: "Moy almashtirish shoxobchalari uchun rejalashtirilgan dastur. Guliston va Sirdaryodan boshlaymiz.",
-      note: "Mytor hozir ishlab chiqilmoqda. Saytdagi barcha ekranlar interfeys namunasi, ulardagi ma’lumotlar esa xayoliy.",
       product: "Mahsulot",
       company: "Loyiha",
       privacy: "Maxfiylik siyosati",
@@ -38,7 +38,7 @@ export default {
     },
     features: {
       title: "Imkoniyatlar · Mytor",
-      description: "Xizmat tarixi, raqam bo‘yicha qidiruv, moy kirimi va sarfi, sanoqdagi farqlar, Telegram eslatmalari, sodiqlik muhrlari, egasiga bildirishnomalar va ovozli kiritish.",
+      description: "Xizmat tarixi, raqam bo‘yicha qidiruv, moy kirimi va sarfi, sanoqdagi farqlar, Telegram eslatmalari, bonus litrlar, egasiga bildirishnomalar va ovozli kiritish.",
     },
     how: {
       title: "Qanday ishlaydi · Mytor",
@@ -147,8 +147,8 @@ export default {
 
   home: {
     eyebrow: "Moy almashtirish shoxobchalari uchun · Guliston va Sirdaryo",
-    title: "Mijoz qaytib keladi, <em>moy&nbsp;hisobi</em> aniq bo‘ladi.",
-    lead: "Mytor moy almashtirish shoxobchalari uchun oddiy dastur. Usta xizmatni yozadi, Mytor esa mashina tarixini, moy qoldig‘ini va haydovchiga eslatmani o‘zi yuritadi.",
+    title: "Servisingiz uchun <em>tartib</em>, mijozingiz uchun qulaylik.",
+    lead: "Mytor bilan avtomobil tarixi, moy qoldig‘i va mijozlar bilan aloqa: barchasi bitta avtomatlashtirilgan tizimda.",
 
     bridge: {
       eyebrow: "Mytor nima qiladi",
@@ -176,6 +176,49 @@ export default {
       driverMsg: "Haydovchiga: keyingi almashtirish vaqtida eslatma",
     },
 
+    compare: {
+      title: "Daftar bilan va Mytor bilan",
+      lead: "Mijoz va pul ko‘pincha shu uch joyda yo‘qoladi. Mytor uchalasini yopadi.",
+      before: "Daftar bilan",
+      after: "Mytor bilan",
+      rows: [
+        {
+          topic: "Mijozlar",
+          before: "Haydovchi unutadi va boshqa shoxobchaga ketadi",
+          after: "Telegram’da eslatma oladi va qaytib keladi",
+        },
+        {
+          topic: "Moy qoldig‘i",
+          before: "Qancha moy qayerga ketgani noma’lum",
+          after: "Har litr hisobda, farq darhol ko‘rinadi",
+        },
+        {
+          topic: "Nazorat",
+          before: "Nima bo‘lganini kechqurun so‘rab bilasiz",
+          after: "Har bir xizmat haqida darhol xabar olasiz",
+        },
+      ],
+    },
+
+    flow: {
+      title: "Usta uch ish qiladi, qolganini Mytor bajaradi",
+      lead: "Ish odatdagidek davom etadi. Usta yozuvni tasdiqlagan zahoti Mytor tarixni, qoldiqni va xabarlarni o‘zi yangilaydi.",
+      worker: "Usta",
+      auto: "Mytor o‘zi",
+      steps: [
+        ["Mashinani topadi", "Raqam yoki telefon bo‘yicha"],
+        ["Xizmatni aytadi", "Ovoz bilan yoki qo‘lda"],
+        ["Tasdiqlaydi", "Bitta tugma bilan"],
+      ],
+      results: [
+        ["Mashina tarixi", "yangi yozuv qo‘shiladi"],
+        ["Moy qoldig‘i", "sarf avtomatik ayiriladi"],
+        ["Egasiga xabar", "shu zahoti Telegram’da"],
+        ["Haydovchiga eslatma", "keyingi almashtirish vaqtida"],
+      ],
+      link: "Bosqichma-bosqich: qanday ishlaydi",
+    },
+
     problems: {
       eyebrow: "Muammo",
       title: "Pul ko‘pincha ikki joyda yo‘qoladi",
@@ -185,7 +228,7 @@ export default {
           tag: "Mijozlar",
           title: "Mijoz qaytib kelmaydi",
           text: "Haydovchi qachon va qaysi moy quyilganini eslamaydi. Daftarcha yo‘qoladi, eslatma bo‘lmaydi. Keyingi safar u boshqa shoxobchaga kirib qoladi.",
-          list: ["Kim, qaysi mashina, qaysi moy: hech biri yozilmagan", "Keyingi almashtirish vaqtini hech kim eslatmaydi", "Qog‘oz sodiqlik kartalari yo‘qoladi"],
+          list: ["Kim, qaysi mashina, qaysi moy: hech biri yozilmagan", "Keyingi almashtirish vaqtini hech kim eslatmaydi", "Qog‘oz bonus kartalari yo‘qoladi"],
         },
         {
           tag: "Moy qoldig‘i",
@@ -208,8 +251,8 @@ export default {
       link: "Barcha imkoniyatlar",
       big: {
         title: "Mijozlar qaytib kelishi uchun sabab",
-        text: "Har bir haydovchining tarixi saqlanadi, keyingi almashtirish vaqtida esa unga Telegram orqali eslatma boradi. Sodiqlik muhrlari ham raqamli bo‘ladi va yo‘qolmaydi.",
-        stampsLabel: "Sodiqlik muhrlari: 6 tadan 4 tasi",
+        text: "Har bir haydovchining tarixi saqlanadi, keyingi almashtirish vaqtida esa unga Telegram orqali eslatma boradi. Bonus litrlar ham raqamli bo‘ladi va yo‘qolmaydi.",
+        stampsLabel: "Bonus litrlar: 6 tadan 4 tasi",
       },
       items: [
         { sample: "62,0 L → 59,0 L", title: "Moy hisobi litrgacha", text: "Kirim, sarf va sanoq bir joyda. Farq chiqsa, uni ko‘rasiz va sababini aniqlaysiz." },
@@ -254,14 +297,17 @@ export default {
   features: {
     eyebrow: "Imkoniyatlar",
     title: "Mytor shoxobchada nima qiladi",
-    lead: "Usta uchun tez yozuv, egasi uchun moy hisobi, haydovchi uchun eslatma. Ekranlar namuna, ma’lumotlar xayoliy.",
+    lead: "Usta uchun tez yozuv, egasi uchun moy hisobi, haydovchi uchun eslatma.",
     toc: "Bo‘limlar",
-    tocItems: ["Xizmat tarixi", "Ovozli kiritish", "Moy hisobi", "Egasiga xabarlar", "Telegram va muhrlar"],
+    tocItems: ["Xizmat tarixi", "Ovozli kiritish", "Moy hisobi", "Egasiga xabarlar", "Telegram va bonus litrlar"],
+    labels: { problem: "Muammo", how: "Mytor nima qiladi", why: "Sizga foydasi" },
 
     records: {
       eyebrow: "01 · Mijoz va mashina tarixi",
       title: "Mijozni taniysiz, oldingi xizmat bir qarashda ko‘rinadi",
       lead: "Mijoz kelganda raqamini yoki telefonini kiriting: oldingi xizmatlar, quyilgan moy va probeg ochiladi.",
+      problem: "Haydovchi «O‘tgan safar qaysi moy quygan edingiz?» deb so‘raydi, javob esa daftarning qayeridadir yoki umuman yozilmagan.",
+      why: "Doimiy mijozga ishonch bilan xizmat qilasiz. Uni taniganingizni ko‘rgan haydovchi yana sizga keladi.",
       points: [
         "Motor moyi va karobka moyi alohida yoziladi",
         "Aniq mahsulot, miqdor, sana va kerak bo‘lsa probeg",
@@ -292,6 +338,8 @@ export default {
       eyebrow: "03 · Moy qoldig‘i: kirim, sarf, sanoq",
       title: "Moy qayerga ketganini ko‘rasiz",
       lead: "Bochkadagi moy litrda, butilkadagi moy donada hisoblanadi. Yetkazib berilgan moy qoldiqqa qo‘shiladi, har bir tasdiqlangan xizmat esa uni avtomatik ayiradi. Siz sanaysiz, Mytor solishtiradi.",
+      problem: "Moy bochkadan litrlab, butilkada donalab sotiladi. Oy oxirida qancha moy qayerga ketganini hech kim aniq ayta olmaydi.",
+      why: "Farqni keyingi sanoqdayoq ko‘rasiz va sababini tez topasiz: yozilmagan xizmat, to‘kilish yoki sanoqdagi xato.",
       caution: {
         title: "Farq nimani anglatadi?",
         text: "Farq tekshirish uchun signal, ayblov emas. Sababi yozilmay qolgan xizmat, to‘kilish, o‘lchash xatosi yoki noto‘g‘ri kiritilgan miqdor bo‘lishi mumkin. Egasi sababini aniqlaydi; tuzatish kiritilsa, u ham tarixda saqlanadi.",
@@ -318,13 +366,15 @@ export default {
     },
 
     telegram: {
-      eyebrow: "05 · Telegram, servis kitobcha, muhrlar",
+      eyebrow: "05 · Telegram, servis kitobcha, bonus litrlar",
       title: "Haydovchi o‘z vaqtida qaytib keladi",
-      lead: "Eslatma, raqamli servis kitobcha va sodiqlik muhrlari Telegram orqali keladi. Haydovchiga hech narsa o‘rnatish shart emas.",
+      lead: "Eslatma, raqamli servis kitobcha va bonus litrlar Telegram orqali keladi. Haydovchiga hech narsa o‘rnatish shart emas.",
+      problem: "Haydovchi moyni qachon almashtirish kerakligini unutadi va yo‘lda ko‘rgan birinchi shoxobchaga kirib qoladi.",
+      why: "Eslatma va bonus litrlar haydovchini aynan sizning shoxobchangizga qaytaradi.",
       points: [
         { t: "Eslatma", d: "Keyingi almashtirish vaqti yaqinlashganda qisqa xabar." },
         { t: "Raqamli servis kitobcha", d: "Har bir almashtirish: sana, moy, miqdor va probeg. Qog‘oz daftarcha yo‘qolsa ham tarix saqlanadi." },
-        { t: "Sodiqlik muhrlari", d: "Har bir xizmat uchun bitta muhr. Nechta muhrdan keyin qanday chegirma berishni shoxobcha o‘zi belgilaydi." },
+        { t: "Bonus litrlar", d: "Har bir xizmat uchun haydovchiga bonus litr yoziladi. Nechta litrdan keyin qanday chegirma berishni shoxobcha o‘zi belgilaydi." },
       ],
       bot: "Mytor bot",
       botSub: "«Namuna» moy servisi",
@@ -336,8 +386,8 @@ export default {
         ["28-iyun", "ZIC X5 10W-40 · 4 L · havo filtri"],
         ["9-aprel", "ZIC X5 10W-40 · 4 L"],
       ],
-      stampsTitle: "Sodiqlik muhrlari",
-      stampsLabel: "6 tadan 4 ta muhr",
+      stampsTitle: "Bonus litrlar",
+      stampsLabel: "6 tadan 4 bonus litr",
       reply: "Rahmat, shanba kuni boraman",
       time1: "10:00",
       time2: "10:14",
@@ -347,6 +397,8 @@ export default {
       eyebrow: "04 · Egasiga xabarlar va kunlik xulosa",
       title: "Shoxobchada bo‘lmasangiz ham xabardor",
       lead: "Yangi xizmat, kam qolgan moy, sanoqdagi farq va har bir tuzatish haqida Telegram orqali xabar olasiz. Qaysi xabarlar kelishini o‘zingiz tanlaysiz; kun oxirida qisqa xulosa ham olishingiz mumkin.",
+      problem: "Egasi har kuni shoxobchada bo‘la olmaydi va nima bo‘lganini faqat kechqurun, ustalardan so‘rab biladi.",
+      why: "Qayerda bo‘lsangiz ham ish qanday ketayotganini bilasiz va kerak bo‘lsa darhol qo‘ng‘iroq qilasiz.",
       feedTitle: "Egasi uchun xabarlar",
       feed: [
         { k: "service", time: "14:32", t: "Yangi xizmat", d: "20 D 477 BB · Spark. Lukoil Genesis 5W-30 (bochka), 3 L. 210 000 so‘m, naqd. Usta: Sardor." },
@@ -361,6 +413,8 @@ export default {
       eyebrow: "02 · Ovozli kiritish",
       title: "Qo‘li band usta ham yozuvni to‘liq qiladi",
       lead: "Usta xizmatni oddiy so‘zlar bilan aytadi. Mytor qoralama tayyorlaydi, aniq bo‘lmagan joyni so‘raydi, usta tasdiqlagandan keyingina yozuv saqlanadi.",
+      problem: "Qo‘li moyli usta telefonda forma to‘ldirishni yoqtirmaydi. Xizmat yozilmay qoladi yoki kun oxirida xotiradan yoziladi.",
+      why: "Yozuv ishni sekinlashtirmaydi, shuning uchun har bir xizmat yoziladi va hisob to‘liq bo‘ladi.",
       langNote: "O‘zbek va rus tillarida gapirish rejalashtirilgan. Ovoz bilan qulay bo‘lmasa, usta qo‘lda ham kiritishi mumkin.",
     },
   },
@@ -427,7 +481,7 @@ export default {
       items: [
         { k: "owner", title: "Egasi", lead: "Nazorat va qaytib keladigan mijozlar", list: ["Har bir xizmat va to‘lov yozuvda", "Moy qoldig‘i va farqlar ko‘rinib turadi", "Joyida bo‘lmasa ham bildirishnomalar", "Eslatmalar orqali mijozlarni qaytarish"] },
         { k: "worker", title: "Usta", lead: "Kamroq qog‘oz, tezroq yozuv", list: ["Raqam bo‘yicha qidiruv", "Ovoz bilan yoki qo‘lda kiritish", "Xatoni tasdiqlashdan oldin tuzatish", "Doimiy mijozning oldingi moyi ko‘rinadi"] },
-        { k: "driver", title: "Haydovchi", lead: "Eslab yurish shart emas", list: ["Telegram’da eslatma", "Raqamli servis kitobcha", "Sodiqlik muhrlari", "Ilova o‘rnatish shart emas"] },
+        { k: "driver", title: "Haydovchi", lead: "Eslab yurish shart emas", list: ["Telegram’da eslatma", "Raqamli servis kitobcha", "Bonus litrlar", "Ilova o‘rnatish shart emas"] },
       ],
     },
     pilot: {
@@ -443,6 +497,12 @@ export default {
     lead: "Mytor hali ishlab chiqilmoqda va biz birinchi pilot shoxobchalarini qidiryapmiz. Pilotda Mytor’ni oddiy ish kuningizda birga sinaymiz. Pilot bepul, to‘lov olinmaydi.",
     facts: ["6 hafta", "Bepul", "Majburiyatsiz"],
     ctaNote: "Demo so‘rash sizni pilotga yoki xaridga majburlamaydi.",
+    ladderTitle: "Nima bepul, nima hali hal qilinmagan",
+    ladder: [
+      { when: "Bugun", title: "Demo", status: "Bepul", text: "Mytor’ni shoxobchangiz misolida ko‘rsatamiz va savollaringizga javob beramiz. Hech narsaga majburlamaydi." },
+      { when: "6 hafta", title: "Pilot", status: "Bepul", text: "Joyida sozlaymiz, ustalarni o‘rgatamiz va kundalik ishda birga sinaymiz. To‘lov olinmaydi." },
+      { when: "Pilotdan keyin", title: "Obuna", status: "Narx sinovda", text: "Davom etishni o‘zingiz hal qilasiz. Narxni pilot ishtirokchilari bilan birga belgilaymiz, avtomatik to‘lov yo‘q." },
+    ],
     proposal: "Narxlar sinovda · hali yakuniy emas",
     pilotTitle: "Pilot qanday o‘tadi",
     weeks: [
@@ -460,15 +520,6 @@ export default {
       { name: "Tarmoq", price: "149 000", unit: "so‘m / oy · har bir nuqta", for: "3 va undan ortiq nuqtasi bor egalar" },
     ],
     noPay: "Saytda to‘lov qabul qilinmaydi va karta ma’lumotlari so‘ralmaydi.",
-    faqTitle: "Narx va pilot bo‘yicha savollar",
-    faq: [
-      { q: "Demo so‘rasam, sotib olishim shartmi?", a: "Yo‘q. Demo bepul va hech narsaga majburlamaydi. Pilotga qo‘shilish yoki qo‘shilmaslikni demodan keyin o‘zingiz hal qilasiz." },
-      { q: "Pilotdan keyin to‘lov avtomatik boshlanadimi?", a: "Yo‘q. Avtomatik to‘lov yo‘q. Davom etishni xohlasangiz, shartlarni alohida kelishib olamiz." },
-      { q: "Nega narxlar «sinovda» deb yozilgan?", a: "Mytor hali ishga tushmagan. Narx shoxobcha egalari uchun adolatli bo‘lishi kerak, shuning uchun uni pilot ishtirokchilari bilan tekshiramiz." },
-      { q: "Pilotda kim qatnasha oladi?", a: "Avvalo Guliston va Sirdaryo viloyatidagi moy almashtirish shoxobchalari. Boshqa shahardan bo‘lsangiz ham so‘rov qoldiring." },
-      { q: "Bir nechta shoxobcham bor. Mytor mos keladimi?", a: "3 va undan ortiq nuqta uchun alohida «Tarmoq» narxi sinovda. So‘rovda shoxobchalar sonini belgilang." },
-      { q: "Haydovchilar to‘laydimi?", a: "Yo‘q. Rejaga ko‘ra, haydovchilar uchun Mytor bepul." },
-    ],
   },
 
   about: {
@@ -483,6 +534,7 @@ export default {
       ],
     },
     local: {
+      place: "Guliston · Sirdaryo viloyati",
       title: "Guliston va Sirdaryodan boshlaymiz",
       text: "Kichik hududdan boshlash shoxobchalarga borish, egalari va ustalari bilan gaplashish hamda mahsulotni ular bilan birga shakllantirish imkonini beradi.",
       list: ["Interfeys o‘zbek (lotin) va rus tillarida", "To‘lov usuli yozuvda qayd etiladi: naqd, karta, Click yoki Payme", "Haydovchilar allaqachon ishlatadigan Telegram"],
@@ -499,10 +551,6 @@ export default {
         { t: "Ma’lumotga hurmat", d: "Haydovchilarga xabarlar roziligi bilan yuboriladi. Ma’lumotlar faqat xizmat uchun ishlatiladi." },
         { t: "Oddiylik", d: "Usta uchun har bir ortiqcha bosish muammo. Keraksiz narsani qo‘shmaymiz." },
       ],
-    },
-    status: {
-      title: "Hozirgi holat",
-      text: "Mytor rejalashtirilgan dastur, hali ishga tushmagan. Birinchi pilot shoxobchalarini qidiryapmiz. Alohida smartfon ilovasi hozircha yo‘q.",
     },
   },
 
@@ -559,7 +607,7 @@ export default {
       { h: "Ma’lumotlar qayerga boradi", p: "Hozircha forma hech qanday serverga ulanmagan: saytda to‘ldirilgan ma’lumotlar yuborilmaydi va saqlanmaydi. Forma ulanganidan keyin bu yerda so‘rovlar qayerda saqlanishi va ularni kim ko‘rishi aniq yoziladi." },
       { h: "Nima uchun ishlatamiz", p: "Faqat so‘rovingiz bo‘yicha siz bilan bog‘lanish hamda demo yoki pilotni tashkil qilish uchun. Ma’lumotlaringizni sotmaymiz va reklama tarqatish uchun ishlatmaymiz." },
       { h: "Qancha saqlaymiz", p: "So‘rov ko‘rib chiqilib, siz bilan muloqot yakunlangunga qadar. Pilotga qo‘shilmasangiz, ma’lumotlaringizni o‘chirishni so‘rashingiz mumkin." },
-      { h: "Cookie va kuzatuv", p: "Bu sayt cookie-fayllar va analitika vositalaridan foydalanmaydi. Tanlagan tilingiz faqat brauzeringizning o‘zida eslab qolinadi va bizga yuborilmaydi. Shriftlar Google Fonts xizmatidan yuklanadi, shu sababli brauzeringiz Google serverlariga murojaat qiladi." },
+      { h: "Cookie va kuzatuv", p: "Bu sayt cookie-fayllar va analitika vositalaridan foydalanmaydi. Tanlagan tilingiz faqat brauzeringizning o‘zida eslab qolinadi va bizga yuborilmaydi. Shriftlar ham saytning o‘zidan yuklanadi: brauzeringiz boshqa xizmatlarga murojaat qilmaydi." },
       { h: "Haydovchilar ma’lumotlari", p: "Mytor ishga tushganda haydovchilarning telefon raqami va mashina ma’lumotlari faqat xizmat tarixi va eslatmalar uchun ishlatilishi rejalashtirilgan. Telegram xabarlari haydovchining roziligi bilan yuboriladi va istalgan vaqtda o‘chirib qo‘yilishi mumkin." },
       { h: "Sizning huquqlaringiz", p: "O‘zingiz haqingizdagi ma’lumotlarni ko‘rish, tuzatish yoki o‘chirishni so‘rashingiz mumkin. Buni siz bilan bog‘langanimizda ayting." },
       { h: "Qonunchilik", p: "Ma’lumotlarni qayta ishlashning O‘zbekiston Respublikasining «Shaxsga doir ma’lumotlar to‘g‘risida»gi Qonuniga muvofiqligi ishga tushirishdan oldin tekshiriladi." },

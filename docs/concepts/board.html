@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8">
+<title>Mytor concept board</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@600..800&family=Onest:wght@400..700&family=JetBrains+Mono:wght@500;700&family=Archivo+Narrow:wght@700&display=swap">
+<style>
+/* Three directions for the same hero. Exploration only, not shipped. */
+*{box-sizing:border-box}body{margin:0;background:#ddd;font:15px/1.5 Onest,sans-serif;color:#141821}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:24px;width:1800px}
+.label{font:700 13px JetBrains Mono,monospace;letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px}
+.frame{height:640px;overflow:hidden;border-radius:10px;box-shadow:0 10px 30px -10px #0004;position:relative}
+.nav{display:flex;align-items:center;gap:16px;padding:16px 24px;font-size:13px}
+.nav b{font:700 18px Geologica;margin-right:auto}
+.btn{display:inline-block;padding:11px 16px;border-radius:10px;font-weight:650;font-size:14px}
+h1{margin:0}
+.phone{width:200px;height:300px;border-radius:26px;padding:7px;background:#141821}
+.phone i{display:block;height:100%;border-radius:20px;background:#fff;padding:14px}
+.row{height:22px;border-radius:6px;background:#F1ECE3;margin-top:8px}
+.row.a{background:#FCEBD6;border:1px solid #F2932B}
+/* A: premium automotive SaaS */
+.A{background:#FAF8F4}.A .nav{border-bottom:1px solid #E5DFD4}
+.A .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;padding:36px 24px}
+.A h1{font:700 40px/1.05 Geologica;letter-spacing:-.025em}
+.A p{color:#3A4150;margin:14px 0 20px}
+.A .btn.p{background:#F2932B}.A .btn.g{border:1.5px solid #141821;margin-left:6px}
+.A .stage{background:#10151F;border-radius:18px;height:420px;display:grid;place-items:center;position:relative}
+.A .note{position:absolute;right:12px;bottom:18px;background:#fff;border-radius:10px;padding:8px 10px;font-size:11px;width:150px;box-shadow:0 8px 20px -8px #0008}
+.A .chip{display:inline-flex;gap:6px;align-items:center;border:1px solid #E5DFD4;background:#fff;border-radius:99px;padding:4px 10px;font-size:12px;margin-bottom:14px}
+.A .chip:before{content:"";width:7px;height:7px;border-radius:50%;background:#F2932B}
+/* B: modern industrial */
+.B{background:#121212;color:#F2F2F2}
+.B .hero{padding:40px 24px}
+.B h1{font:700 64px/0.95 "Archivo Narrow",sans-serif;text-transform:uppercase;letter-spacing:-.01em}
+.B h1 em{font-style:normal;color:#FF7A1A}
+.B p{color:#BDBDBD;max-width:40ch;margin:18px 0 22px}
+.B .btn.p{background:#FF7A1A;color:#111;border-radius:2px}.B .btn.g{border:1.5px solid #F2F2F2;border-radius:2px;margin-left:6px}
+.B .stripe{position:absolute;left:0;right:0;bottom:0;height:120px;background:repeating-linear-gradient(135deg,#FF7A1A 0 22px,#121212 22px 44px);opacity:.9}
+.B .phone{position:absolute;right:28px;top:150px;transform:rotate(6deg)}
+/* C: minimal SaaS */
+.C{background:#fff}.C .nav{border-bottom:1px solid #EEE}
+.C .hero{padding:48px 24px 0;text-align:center}
+.C h1{font:600 38px/1.1 Onest;letter-spacing:-.02em;max-width:16ch;margin:0 auto}
+.C p{color:#5E6573;max-width:46ch;margin:14px auto 20px}
+.C .btn.p{background:#141821;color:#fff}.C .btn.g{color:#141821;margin-left:6px}
+.C .shot{margin:28px auto 0;width:86%;height:260px;border:1px solid #E7E7E7;border-radius:12px 12px 0 0;background:linear-gradient(#FAFAFA,#fff);padding:18px;display:grid;grid-template-columns:1fr 2fr;gap:12px}
+.C .shot div{border-radius:8px;background:#F4F4F5}
+.why{font-size:13px;color:#333;margin-top:10px;line-height:1.45}
+</style></head>
+<body><div class="board">
+<section><p class="label">A · Premium automotive SaaS</p><div class="frame A">
+  <div class="nav"><b>Mytor</b><span>Imkoniyatlar</span><span>Qanday ishlaydi</span><span>Narxlar va pilot</span><span class="btn" style="background:#F2932B;padding:7px 12px">Demo so‘rash</span></div>
+  <div class="hero"><div><span class="chip">Ishlab chiqilmoqda</span><h1>Mijoz qaytib keladi, moy hisobi aniq bo‘ladi.</h1><p>Usta xizmatni yozadi. Mytor mashina tarixini, moy qoldig‘ini va haydovchiga eslatmani o‘zi yuritadi.</p><span class="btn p">Demo so‘rash</span><span class="btn g">Qanday ishlaydi?</span><p style="font-size:12px;margin-top:22px">Pilot: 6 hafta · Bepul · Majburiyatsiz</p></div>
+  <div class="stage"><div class="phone"><i><b style="font:700 13px Geologica">Xizmat yozuvi</b><span class="row"></span><span class="row a"></span><span class="row"></span><span class="row"></span></i></div><div class="note"><b>Egasiga xabar · 14:32</b><br>Yangi xizmat: Spark, 3 L</div></div></div>
+</div><p class="why">Warm white, graphite product stage, one amber CTA. Calm reading, strong product focus.</p></section>
+
+<section><p class="label">B · Modern industrial</p><div class="frame B">
+  <div class="nav"><b>MYTOR</b><span>IMKONIYATLAR</span><span>NARXLAR</span><span class="btn" style="background:#FF7A1A;color:#111;padding:7px 12px;border-radius:2px">DEMO</span></div>
+  <div class="hero"><h1>Mijoz qaytadi.<br><em>Moy</em> hisobi aniq.</h1><p>Usta xizmatni yozadi. Mytor tarix, qoldiq va eslatmani yuritadi.</p><span class="btn p">DEMO SO‘RASH</span><span class="btn g">QANDAY ISHLAYDI?</span></div>
+  <div class="phone"><i><b style="font:700 13px Geologica;color:#111">Xizmat yozuvi</b><span class="row"></span><span class="row a"></span><span class="row"></span></i></div>
+  <div class="stripe"></div>
+</div><p class="why">Workshop energy, but all-caps Uzbek gets hard to read, the hazard stripe feels like a warning, and it is close to "gaming".</p></section>
+
+<section><p class="label">C · Minimal SaaS</p><div class="frame C">
+  <div class="nav"><b>Mytor</b><span>Imkoniyatlar</span><span>Qanday ishlaydi</span><span>Narxlar</span><span class="btn" style="background:#141821;color:#fff;padding:7px 12px">Demo so‘rash</span></div>
+  <div class="hero"><h1>Mijoz qaytib keladi, moy hisobi aniq bo‘ladi.</h1><p>Usta xizmatni yozadi. Mytor tarix, qoldiq va eslatmani o‘zi yuritadi.</p><span class="btn p">Demo so‘rash</span><span class="btn g">Qanday ishlaydi? →</span>
+  <div class="shot"><div></div><div></div></div></div>
+</div><p class="why">Very clear and very fast, but generic: it could be any SaaS, and nothing says "oil-change shop".</p></section>
+</div></body></html>

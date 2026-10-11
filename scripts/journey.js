@@ -77,9 +77,17 @@ async function tap(sel, { nav = false } = {}) {
     return reach ? { x, y } : { err: "covered by " + (hit ? hit.tagName + "." + hit.className : "nothing") };
   })()`);
   if (pt.err) throw new Error(`tap ${sel}: ${pt.err}`);
-  const loaded = nav ? once("Page.loadEventFired") : null;
+  // Links inside one language navigate client-side (Next.js, no load event); switching language loads a new
+  // document. Either way, wait until the address changes and the new page has rendered.
+  const before = nav ? await ev("location.pathname") : "";
   for (const type of ["mousePressed", "mouseReleased"]) await send("Input.dispatchMouseEvent", { type, x: pt.x, y: pt.y, button: "left", clickCount: 1 });
-  if (loaded) { await loaded; await settle(); } else await sleep(120);
+  if (!nav) { await sleep(120); return; }
+  for (let i = 0; i < 100; i++) {
+    await sleep(100);
+    const now = await ev(`document.readyState === "complete" ? location.pathname : ""`).catch(() => "");
+    if (now && now !== before) { await sleep(250); await settle(); return; }
+  }
+  throw new Error(`tap ${sel}: address did not change from ${before}`);
 }
 async function type(sel, text) {
   for (let attempt = 1; attempt <= 2; attempt++) {
@@ -115,20 +123,37 @@ for (const t of [uz, ru]) {
   ok(await inView(".hero .btn-primary"), `primary CTA «${t.ui.cta}» visible without scrolling`);
   ok((await text(".hero .btn-primary")) === t.ui.cta, "primary CTA label");
   ok(!(await ev(`/interfeys namunasi|пример интерфейса/i.test(document.querySelector("main").innerText) || !!document.querySelector(".status-note, .sample-tag, .vnote")`)), "no demo/sample labels on the page itself");
-  ok(/interfeys namunasi|пример интерфейса/i.test(await text(".site-footer")), "footer still notes screens are examples");
+  ok((await text(".demo-bar .sr-only")) === t.ui.demoBar && (await ev(`getComputedStyle(document.querySelector(".demo-bar")).position`)) === "fixed", `demo strip «${t.ui.demoBar}» fixed at the bottom`);
   ok(await ev(`document.querySelectorAll("main > section").length`) <= 9, "homepage kept to 8 sections + CTA");
-  ok(await inView(".hero-proof"), "free pilot (6 weeks · free · no commitment) visible without scrolling");
+  ok(!(await ev(`!!document.querySelector(".hero-proof")`)) && (await ev(`[...document.querySelectorAll(".cta-facts li")].map(l => l.textContent).join("|")`)) === t.pricing.facts.join("|"), "pilot facts (6 weeks · free · no commitment) moved out of the hero, still stated in the closing CTA");
   ok(!(await ev(`!!document.querySelector(".hero .cta-soon a, a.cta-soon")`)), "download marked as coming soon, not a link");
 
-  // Hero app loops; the pause button stops and resumes it.
-  await tap("[data-app-toggle]");
-  ok((await text("[data-app-toggle] [data-label]")) === t.demo.play && (await ev(`document.querySelector("[data-app]").classList.contains("is-held")`)), "hero app: pause stops the loop");
-  await tap("[data-app-toggle]");
-  ok((await text("[data-app-toggle] [data-label]")) === t.demo.pause && !(await ev(`document.querySelector("[data-app]").classList.contains("is-held")`)), "hero app: second tap resumes");
+  // Hero app loops without a control and does not stop when the mouse is over it.
+  ok(!(await ev(`!!document.querySelector("[data-app] button")`)), "hero app: no pause button");
+  const phonePt = await ev(`(async () => { const el = document.querySelector("[data-app] .phone"); el.scrollIntoView({ block: "center", behavior: "instant" }); await new Promise(r => setTimeout(r, 900)); const b = el.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; })()`);
+  ok(await ev(`document.querySelector("[data-app]").hasAttribute("data-run")`), "hero app: loop running once on screen");
+  await send("Input.dispatchMouseEvent", { type: "mouseMoved", x: phonePt.x, y: phonePt.y });
+  await sleep(150);
+  ok(!(await ev(`document.querySelector("[data-app]").classList.contains("is-paused")`)), "hero app: keeps playing while the mouse is over the phone");
+  await send("Input.dispatchMouseEvent", { type: "mouseMoved", x: 2, y: 2 });
+  await sleep(150);
+  ok(!(await ev(`document.querySelector("[data-app]").classList.contains("is-paused")`)), "hero app: still playing after the mouse leaves");
+  await ev(`scrollTo(0, 0)`);
 
-  // Voice story: on a phone every step shows its own screen.
-  ok((await ev(`document.querySelectorAll("#voice .story-step").length`)) === 5, "voice story: 5 steps");
-  ok(await visible('#voice .story-step[data-step="5"] .story-inline'), "voice story: step screens shown inline on the phone");
+  // Second hero button (download, coming soon) and the new story: comparison, four benefits, three worker steps → automatic results.
+  const soonText = (await text(".hero .cta-soon")).replace(/\s+/g, " ").trim();
+  ok(soonText === `${t.ui.download} ${t.ui.soon}`, `second hero button «${t.ui.download}» marked «${t.ui.soon}»${soonText === `${t.ui.download} ${t.ui.soon}` ? "" : ` (got «${soonText}»)`}`);
+  ok((await ev(`document.querySelectorAll(".compare .cmp-card").length`)) === 3, "home: problem → Mytor comparison has 3 rows");
+  ok((await ev(`document.querySelectorAll(".bento .tile").length`)) === 4, "home: 4 business benefits");
+  ok((await ev(`document.querySelectorAll(".flow-steps li").length`)) === 3 && (await ev(`document.querySelectorAll(".flow-results li").length`)) === 4, "home: 3 worker steps → 4 automatic results");
+
+  // Voice demo on the home page: compact step-through instead of a long scroll story.
+  ok((await ev(`document.querySelectorAll("#voice .vstep").length`)) === 5, "home voice demo: 5 steps");
+  await tap("#voice [data-vnext]");
+  await tap("#voice [data-vnext]");
+  ok((await text("#voice [data-vcap] b")).startsWith("3/5"), "home voice demo: Next advances, caption follows on the phone");
+  // Before the redesign the home page was 11,473 px tall at 390 px (pinned scroll story); keep it clearly shorter.
+  ok((await ev(`document.documentElement.scrollHeight`)) < 10600, "home page stays short enough to scan on a phone");
 
   // FAQ opens and closes.
   await tap("#faq-h ~ .faq details:nth-of-type(2) summary, .faq details:nth-of-type(2) summary");
@@ -165,6 +190,8 @@ for (const t of [uz, ru]) {
   ok((await ev(`[...document.querySelectorAll(".page-hero .facts li")].map(l => l.textContent).join("|")`)) === t.pricing.facts.join("|"), "pricing: 6 weeks · free · no commitment");
   ok((await text(".badge-proposal")).includes(t.pricing.proposal), "pricing: prices marked as being tested");
   ok((await ev(`document.querySelectorAll(".plan").length`)) === 3, "pricing: 3 proposed plans");
+  ok((await ev(`[...document.querySelectorAll(".ladder-status")].map(s => s.textContent.trim()).join("|")`)) === t.pricing.ladder.map((s) => s.status).join("|"), "pricing: demo and pilot free, post-pilot price marked as being tested");
+  ok(!(await ev(`!!document.querySelector('.plan a, .plan button, input[name*="card" i]')`)), "pricing: no buy buttons or card fields");
 
   // 5. Decides to request a demo.
   await tap(".page-hero .btn-primary", { nav: true });
@@ -219,6 +246,15 @@ for (const t of [uz, ru]) {
   await type("[data-lookup-input]", "477");
   ok((await ev(`document.querySelectorAll("[data-lookup-list] li:not([hidden])").length`)) === 1, "features: sample lookup filters by plate");
 }
+
+// Reduced motion: nothing waits for an animation, the hero shows the finished record and offers no loop control.
+console.log("\nprefers-reduced-motion: reduce");
+await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+await go("/");
+ok((await ev(`[...document.querySelectorAll("[data-reveal]")].every(el => getComputedStyle(el).opacity === "1")`)), "reduced motion: every section visible without scrolling into view");
+ok((await ev(`getComputedStyle(document.querySelector(".app-rec")).visibility === "visible" && getComputedStyle(document.querySelector(".app-listen")).visibility === "hidden"`)), "reduced motion: hero shows the saved record, not the animation");
+ok(!(await ev(`document.querySelector("[data-app]").hasAttribute("data-run")`)), "reduced motion: the hero loop does not run");
+await send("Emulation.setEmulatedMedia", { features: [] });
 
 ok(errors.length === 0, `no JavaScript errors${errors.length ? ": " + errors.join(" | ") : ""}`);
 console.log(`\n${passed} passed, ${failed} failed (expect=${expect})`);

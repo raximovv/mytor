@@ -1,0 +1,16 @@
+// Cloudflare Workers: serves the static Next.js export (out/) as static assets, no Worker code.
+// Deploy: Cloudflare Workers Builds (build `npm run check`, deploy `npx wrangler deploy`) or locally `npm run deploy`.
+// The build writes the static Next.js export to out/ (the older static generator wrote dist/).
+// The worker name gives the address mytor.<account-subdomain>.workers.dev.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "mytor",
+  "compatibility_date": "2026-10-10",
+  "assets": {
+    "directory": "./out",
+    // /features → /features/ and index.html for directories (matches the export's trailing-slash routes).
+    "html_handling": "auto-trailing-slash",
+    // Unknown paths get the nearest 404.html: ru/404.html under /ru/, 404.html elsewhere (with a real 404 status).
+    "not_found_handling": "404-page"
+  }
+}

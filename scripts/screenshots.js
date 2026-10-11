@@ -1,7 +1,7 @@
 // Real screenshots of the running site via headless Chrome/Edge + DevTools protocol (no dependencies; Node 22+).
 // Usage: npm run serve (in another terminal), then:
 //   node scripts/screenshots.js [baseUrl] [filter]   → PNGs in screenshots/
-//   node scripts/screenshots.js [baseUrl] --audit    → every route × 320/375/430/1440: overflow, console errors,
+//   node scripts/screenshots.js [baseUrl] --audit    → every route × 320–1440 (7 widths): overflow, console errors,
 //                                                      failed requests, small touch targets, heading order
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, writeFileSync, mkdtempSync, rmSync } from "node:fs";
@@ -10,11 +10,17 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const out = join(root, "screenshots");
+const argv = process.argv.slice(2);
+const flag = (name) => (argv.find((a) => a.startsWith(`--${name}=`)) || "").split("=")[1] || "";
+const positional = argv.filter((a) => !a.startsWith("--") || a === "--audit" || a === "--matrix");
+const out = join(root, "screenshots", flag("out"));
 mkdirSync(out, { recursive: true });
-const base = (process.argv[2] || "http://localhost:4321").replace(/\/$/, "");
-const filter = process.argv[3] || "";
+const base = (positional[0] || "http://localhost:4321").replace(/\/$/, "");
+const filter = positional[1] || "";
 const AUDIT = filter === "--audit";
+// --matrix: first screen of every page in both languages at every QA width (before/after comparisons).
+const MATRIX = filter === "--matrix";
+const WIDTHS = [320, 375, 390, 430, 768, 1024, 1440];
 
 const browserPath = [
   process.env.CHROME_PATH,
@@ -55,7 +61,19 @@ const SHOTS = [
   ["18-404-desktop", "/no-such-page/", D, { full: false }],
   ["19-404-ru-mobile", "/ru/no-such-page/", M, { full: true }],
   ["20-faq-open-mobile", "/", M, { clip: ".faq", run: `document.querySelectorAll('.faq details')[4].open=true` }],
-].filter(([n]) => AUDIT || n.includes(filter));
+].filter(([n]) => AUDIT || MATRIX || n.includes(filter));
+if (MATRIX) {
+  SHOTS.length = 0;
+  const pages = [["home", "/"], ["features", "/features/"], ["how", "/how-it-works/"], ["pricing", "/pricing/"], ["about", "/about/"], ["demo", "/demo/"], ["privacy", "/privacy/"], ["404", "/no-such-page/"]];
+  for (const [name, p] of pages) {
+    for (const lang of ["uz", "ru"]) {
+      const path = lang === "uz" ? p : "/ru" + p;
+      // Full pages at one phone and one desktop width; first screen at the rest.
+      SHOTS.push([`${name}-${lang}-390-full`, path, 390, { full: true }], [`${name}-${lang}-1440-full`, path, 1440, { full: true }]);
+      if (lang === "uz" || name === "home") for (const w of WIDTHS) if (w !== 390 && w !== 1440) SHOTS.push([`${name}-${lang}-${w}`, path, w, {}]);
+    }
+  }
+}
 
 const profile = mkdtempSync(join(tmpdir(), "mytor-shots-"));
 const port = 9300 + Math.floor(Math.random() * 500);
@@ -108,7 +126,7 @@ if (AUDIT) {
   });
   const routes = ["/", "/features/", "/how-it-works/", "/pricing/", "/about/", "/demo/", "/privacy/", "/no-such-page/"];
   const all = [...routes, ...routes.map((r) => "/ru" + r)];
-  for (const width of [320, 375, 430, 1440]) {
+  for (const width of WIDTHS) {
     for (const path of all) {
       current = `${width}px ${path}`;
       await send("Emulation.setDeviceMetricsOverride", { width, height: 800, deviceScaleFactor: 1, mobile: width < 600 });
@@ -143,13 +161,20 @@ if (AUDIT) {
         // Text clipped inside its box.
         const clipped = [...document.querySelectorAll("h1,h2,h3,.btn,.plate,.frow dd")].filter(el => el.scrollWidth > el.clientWidth + 1 && getComputedStyle(el).overflow !== "visible").slice(0, 3).map(el => el.tagName.toLowerCase() + " " + el.textContent.trim().slice(0, 24));
         if (clipped.length) out.push("clipped: " + clipped.join(" | "));
+        // Readable text: nothing visible under 12 px (decorative, aria-hidden parts excepted).
+        const tiny = [...document.querySelectorAll("main *, header *, footer *")].filter(el => {
+          if (el.closest("svg, [aria-hidden=true], .sr-only") || !el.getBoundingClientRect().width) return false;
+          if (![...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return false;
+          return parseFloat(getComputedStyle(el).fontSize) < 12;
+        }).slice(0, 3).map(el => el.tagName.toLowerCase() + "." + [...el.classList].join(".") + " " + getComputedStyle(el).fontSize);
+        if (tiny.length) out.push("text under 12px: " + tiny.join(" | "));
         return [...new Set(out)];
       })()`);
       r.forEach(record);
     }
   }
   console.log(issues.length ? issues.join("\n") : "Audit: no issues found.");
-  console.log(`Audited ${all.length} routes × 4 widths.`);
+  console.log(`Audited ${all.length} routes × ${WIDTHS.length} widths (${WIDTHS.join(", ")}).`);
   ws.close(); chrome.kill(); await sleep(300);
   try { rmSync(profile, { recursive: true, force: true }); } catch {}
   process.exit(issues.length ? 1 : 0);
@@ -162,8 +187,19 @@ for (const [name, path, width, opt] of SHOTS) {
   await send("Page.navigate", { url: base + path });
   await loaded;
   await evaluate(`document.fonts.ready.then(() => new Promise(r => setTimeout(r, 300)))`);
+  // Scroll-in reveals only fire on screen; a full-page capture shows everything as it looks once read.
+  if (opt.full || opt.clip) {
+    await evaluate(`(() => {
+      const s = document.createElement("style");
+      s.textContent = "[data-reveal], [data-stagger] li { transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important; }";
+      document.head.appendChild(s);
+      document.querySelectorAll("[data-reveal], [data-stagger]").forEach((el) => el.classList.add("is-in"));
+    })()`);
+    await sleep(100);
+  }
   if (opt.run) { await evaluate(`(async () => { ${opt.run} })()`); await sleep(700); }
-  let params = { format: "png", captureBeyondViewport: true };
+  // First-screen shots capture the viewport only; full and clipped shots go beyond it.
+  let params = { format: "png", captureBeyondViewport: !!(opt.full || opt.clip) };
   if (opt.clip) {
     await evaluate(`document.querySelector(".site-header").style.position = "static"`);
     const r = await evaluate(`(() => { const b = document.querySelector(${JSON.stringify(opt.clip)}).getBoundingClientRect(); return { x: b.left - 16, y: b.top + scrollY - 16, width: b.width + 32, height: b.height + 32 }; })()`);
@@ -175,7 +211,7 @@ for (const [name, path, width, opt] of SHOTS) {
   const overflow = await evaluate(`document.documentElement.scrollWidth - document.documentElement.clientWidth`);
   const { data } = await send("Page.captureScreenshot", params);
   writeFileSync(join(out, `${name}.png`), Buffer.from(data, "base64"));
-  console.log(`saved screenshots/${name}.png${overflow > 0 ? `  ⚠ horizontal overflow ${overflow}px` : ""}`);
+  console.log(`saved screenshots/${flag("out") ? flag("out") + "/" : ""}${name}.png${overflow > 0 ? `  ⚠ horizontal overflow ${overflow}px` : ""}`);
 }
 ws.close();
 chrome.kill();
