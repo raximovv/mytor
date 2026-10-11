@@ -5,8 +5,8 @@ Uzbek Latin is the default language; Russian lives under `/ru/`.
 
 The current **Pitch Day 3.0 presentation** puts the problem/solution, team, roadmap and implementation
 plan on the homepage. `/demo/` contains a demo-video area, its description and an interactive UI walkthrough.
-Add the actual 1–5 minute recording to `src/content/pitch-assets.ts` before submission; the page currently says
-the video is being prepared. Team roles and backgrounds come from the supplied deck; expanded skills were
+The shared player now contains the 90-second English demo, with AI narration, captions and current-prototype
+captures. Proposed MVP features are labeled as planned. See `docs/demo-video.md`. Team roles and backgrounds come from the supplied deck; expanded skills were
 removed at the user's request. Add available public member profile links. See `docs/pitch-day-preview.md`.
 
 Features, How it works, Pricing and About were removed with the user's approval.

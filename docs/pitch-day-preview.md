@@ -8,7 +8,7 @@ Confirmed role mapping: Humoyun Nasipkulov (Strategy), Rahim Raximov (Code), Mex
 
 The current product is an illustrative UI prototype. Database, live speech recognition, reminders and analytics belong to the proposed MVP plan. Do not imply these services are running.
 
-Required before submission: add the actual 1–5 minute demo video in `src/content/pitch-assets.ts` and add available public member profile links. Team skill and problem-fit explanations are not currently rendered after the user's removals. Do not present the Canva deck as a demo video.
+The approved 90-second English demo is configured in `src/content/pitch-assets.ts`. Available public member profile links remain a content follow-up. Team skill and problem-fit explanations are not currently rendered after the user's removals. Do not present the Canva deck as a demo video.
 
 User-approved consolidation completed on 11 October: `/features/`, `/how-it-works/`, `/pricing/`, `/about/` and their Russian equivalents have been removed. Their content is covered by the homepage and demo. Privacy and bilingual 404 handling remain. The separate `Nega bu jamoa?` section was removed.
 
@@ -22,7 +22,7 @@ The video frame gently expands once when entering view. The roadmap line draws o
 
 Final refinements: three comparison cards use illustrative photos and subtle cursor tilt. The control card names the notification recipient explicitly as Asoschi. Prototype buttons omit "UI". Team code links to `https://github.com/raximovv/mytor`. All website apostrophes use the straight character (`'`).
 
-The real recording remains pending. The homepage video button opens the correct localized `/demo/#prototype`; the demo version links to its own prototype.
+The shared video player serves `public/assets/demo/mytor-demo.mp4` on the homepage and `/demo/` in both languages. It includes English AI narration, captions, current-prototype captures, the proposed MVP, pilot plan and team. Planned capabilities are clearly labeled. The "English demo / first draft" label has been removed from every scene and the poster.
 
 ## Verification
 
@@ -33,4 +33,4 @@ The real recording remains pending. The homepage video button opens the correct 
 - Screenshots: `screenshots/pitch-day-preview/`.
 - Selected-design evidence: `screenshots/pitch-incorporated/`; 16 responsive cases across home/demo in both languages at 320, 390, 768 and 1440 px, plus both prototypes' five keyboard-selectable steps and restart.
 - Local static preview: `http://localhost:4321/` and `http://localhost:4321/demo/`.
-- The older shop-request `scripts/journey.js` is not applicable to this presentation preview. Required recording and remaining team profile links are content follow-ups, not verified as present.
+- The older shop-request `scripts/journey.js` is not applicable to this presentation preview. Remaining team profile links are a content follow-up.

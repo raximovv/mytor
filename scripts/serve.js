@@ -20,6 +20,7 @@ const TYPES = {
   ".woff2": "font/woff2",
   ".ico": "image/x-icon",
   ".webp": "image/webp",
+  ".mp4": "video/mp4",
 };
 
 const isFile = async (p) => (await stat(p).catch(() => null))?.isFile() ?? false;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PITCH_ASSETS } from "@/content/pitch-assets";
-import { CONTENT, path, type Lang } from "@/lib/site";
+import { CONTENT, href, path, type Lang } from "@/lib/site";
 
 /** The selected video presentation is shared by the homepage and required demo page. */
 export default function PitchVideo({ lang, onDemoPage = false }: { lang: Lang; onDemoPage?: boolean }) {
@@ -13,7 +13,9 @@ export default function PitchVideo({ lang, onDemoPage = false }: { lang: Lang; o
         <div className="pitch-video-frame" data-reveal>
           {video ? (video.kind === "embed" ?
             <iframe src={video.src} title={p.videoTitle} loading="lazy" allow="fullscreen; picture-in-picture" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" /> :
-            <video src={video.src} controls preload="metadata" aria-label={p.videoTitle} />
+            <video src={video.src.startsWith("/") ? href(video.src) : video.src}
+              poster={video.poster ? (video.poster.startsWith("/") ? href(video.poster) : video.poster) : undefined}
+              controls playsInline preload="metadata" aria-label={p.videoTitle} />
           ) : (
             <div className="pitch-video-pending" role="status">
               <span className="pitch-video-brand">Mytor</span>
