@@ -2,14 +2,30 @@
   "name": "mytor-site",
   "version": "0.1.0",
   "private": true,
-  "description": "Marketing website for Mytor (Uzbek Latin + Russian). Static, dependency-free build.",
+  "description": "Marketing website for Mytor (Uzbek Latin + Russian). Next.js (React) static export, deployed to Cloudflare Workers.",
   "type": "module",
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=20.9"
+  },
   "scripts": {
-    "build": "node scripts/build.js",
+    "dev": "next dev",
+    "build": "next build && node scripts/postbuild.js",
     "serve": "node scripts/serve.js",
-    "start": "node scripts/build.js && node scripts/serve.js",
-    "check": "node scripts/build.js && node scripts/check.js",
-    "screenshots": "node scripts/screenshots.js"
+    "start": "npm run build && node scripts/serve.js",
+    "check": "npm run build && node scripts/check.js",
+    "screenshots": "node scripts/screenshots.js",
+    "deploy": "npm run check && wrangler deploy"
+  },
+  "dependencies": {
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3",
+    "wrangler": "4.149.0"
   }
 }

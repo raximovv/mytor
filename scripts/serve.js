@@ -1,10 +1,10 @@
-// Minimal static server for dist/: clean URLs, trailing-slash redirects and real 404 pages.
+// Minimal static server for out/ (the Next.js export): clean URLs, trailing-slash redirects and real 404 pages.
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { join, normalize, extname, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const dist = join(dirname(fileURLToPath(import.meta.url)), "..", "dist");
+const dist = join(dirname(fileURLToPath(import.meta.url)), "..", "out");
 const port = Number(process.env.PORT) || 4321;
 const TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -15,6 +15,9 @@ const TYPES = {
   ".txt": "text/plain; charset=utf-8",
   ".xml": "application/xml; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".woff2": "font/woff2",
+  ".ico": "image/x-icon",
+  ".webp": "image/webp",
 };
 
 const isFile = async (p) => (await stat(p).catch(() => null))?.isFile() ?? false;
