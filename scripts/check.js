@@ -36,6 +36,11 @@ const files = [];
 })(dist);
 const html = files.filter((f) => f.endsWith(".html"));
 
+// The user approved consolidating these routes into the pitch homepage and demo.
+for (const lang of ["", "ru/"]) for (const route of ["features", "how-it-works", "pricing", "about"]) {
+  if (existsSync(join(dist, lang, route, "index.html"))) fail(`Removed route still exported: /${lang}${route}/`);
+}
+
 // Site URL ("/ru/", or "/mytor/ru/" with a base path) -> path inside out/ ("/ru/"); null when it points outside the site.
 const local = (href) => (href.startsWith(BASE + "/") ? href.slice(BASE.length) : null);
 
@@ -110,6 +115,24 @@ for (const file of html) {
   if (/<title>[^<]*—|content="[^"]*—/.test(src)) fail(`${rel}: em dash in title/description`);
   // Every page carries the fixed "site is a demo" strip (the site's disclosure since the status notes were removed).
   if (!/class="demo-bar"/.test(src)) fail(`${rel}: missing the "site is a demo" strip`);
+
+  // Pitch Day presentation requirements must remain reachable in both languages.
+  if (rel === "index.html" || rel === "ru/index.html") {
+    for (const id of ["problem", "team", "why-us", "roadmap", "implementation"]) {
+      if (!src.includes(`id="${id}"`)) fail(`${rel}: missing Pitch Day section ${id}`);
+    }
+    for (const stage of ["Idea", "Prototype", "MVP", "Launched"]) {
+      if (!src.includes(`<h3>${stage}</h3>`)) fail(`${rel}: missing roadmap stage ${stage}`);
+    }
+  }
+  if (rel === "demo/index.html" || rel === "ru/demo/index.html") {
+    for (const id of ["demo-video", "video-description-h", "prototype"]) {
+      if (!src.includes(`id="${id}"`)) fail(`${rel}: missing demo section ${id}`);
+    }
+    if (!src.includes('href="#prototype"')) fail(`${rel}: UI prototype is not linked`);
+    if (src.includes('id="demo-form"')) fail(`${rel}: demo presentation replaced with a request form`);
+    if (!/<iframe |<video |class="pitch-video-pending"/.test(src)) fail(`${rel}: missing video or its honest pending state`);
+  }
 }
 
 // 3. Language switch keeps the equivalent page.

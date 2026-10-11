@@ -42,7 +42,7 @@ export default function Header({ home, nav, current, cta, ctaHref, ctaCurrent, l
         <nav className={`nav${open ? " is-open" : ""}`} id="site-nav" aria-label={labels.mainNav} ref={navRef}>
           <ul className="nav-list">
             {nav.map((n) => (
-              <li key={n.key}><Link href={n.href} aria-current={n.key === current ? "page" : undefined} onClick={() => setOpen(false)}>{n.label}</Link></li>
+              <li key={n.key}><a href={n.href} aria-current={n.key === current ? "page" : undefined} onClick={() => setOpen(false)}>{n.label}</a></li>
             ))}
           </ul>
           <Link className="btn btn-primary nav-cta" href={ctaHref} onClick={() => setOpen(false)}>{cta}</Link>

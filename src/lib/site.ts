@@ -17,10 +17,6 @@ export const FORM_ENDPOINT = process.env.MYTOR_FORM_ENDPOINT || "";
 
 export const ROUTES = {
   home: "",
-  features: "features/",
-  how: "how-it-works/",
-  pricing: "pricing/",
-  about: "about/",
   demo: "demo/",
   privacy: "privacy/",
 } as const;
@@ -28,7 +24,7 @@ export type PageKey = keyof typeof ROUTES;
 export const PAGE_KEYS = Object.keys(ROUTES) as PageKey[];
 
 export const other = (lang: Lang): Lang => (lang === "uz" ? "ru" : "uz");
-/** Path inside the site (no base path): "/", "/ru/features/". Use with next/link. */
+/** Path inside the site (no base path): "/", "/ru/demo/". Use with next/link. */
 export const prefix = (lang: Lang) => (lang === "uz" ? "/" : "/ru/");
 export const path = (lang: Lang, key: PageKey) => prefix(lang) + ROUTES[key];
 /** Full URL path including the base path: for plain <a> links, assets and metadata. */

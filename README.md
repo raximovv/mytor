@@ -3,6 +3,15 @@
 Marketing site for Mytor (planned software for oil-change shops, Guliston / Sirdaryo).
 Uzbek Latin is the default language; Russian lives under `/ru/`.
 
+The current **Pitch Day 3.0 presentation** puts the problem/solution, team, roadmap and implementation
+plan on the homepage. `/demo/` contains a demo-video area, its description and an interactive UI walkthrough.
+Add the actual 1–5 minute recording to `src/content/pitch-assets.ts` before submission; the page currently says
+the video is being prepared. Team roles and backgrounds come from the supplied deck; expanded skills were
+removed at the user's request. Add available public member profile links. See `docs/pitch-day-preview.md`.
+
+Features, How it works, Pricing and About were removed with the user's approval.
+Navigation now points to the homepage sections.
+
 **Stack:** [Next.js](https://nextjs.org/) 16 (App Router, React 19, TypeScript), exported as static files
 (`output: "export"`) and deployed to **Cloudflare Workers** static assets. Every page is pre-rendered to plain HTML
 at build time; React adds the interactive parts (menu, hero loop, voice demo, sample lookup, demo form, scroll
@@ -60,11 +69,7 @@ Unknown paths get the nearest `404.html` (`ru/404.html` under `/ru/`) with a rea
 | Page | Uzbek | Russian |
 |---|---|---|
 | Home | `/` | `/ru/` |
-| Features | `/features/` | `/ru/features/` |
-| How it works | `/how-it-works/` | `/ru/how-it-works/` |
-| Pricing / pilot | `/pricing/` | `/ru/pricing/` |
-| About | `/about/` | `/ru/about/` |
-| Demo / pilot request | `/demo/` | `/ru/demo/` |
+| Demo video / UI prototype | `/demo/` | `/ru/demo/` |
 | Privacy | `/privacy/` | `/ru/privacy/` |
 | 404 | `404.html` | `ru/404.html` |
 
@@ -96,6 +101,10 @@ node scripts/screenshots.js http://localhost:4321 --matrix --out=redesign/after
 
 Real screenshots in `screenshots/` (standard set), or every page in both languages at all QA widths.
 
+The older `scripts/journey.js` below tests the former shop-request funnel; it is not the acceptance check for
+this Pitch Day preview, whose demo page no longer renders the request form. Use `npm run check` plus browser
+checks of homepage anchors, the mobile menu, language switching and all five demo steps for this preview.
+
 ```bash
 node scripts/journey.js http://localhost:4321 --expect=not-connected
 ```
@@ -118,14 +127,14 @@ Re-renders `public/assets/og-uz.png`, `og-ru.png` and `apple-touch-icon.png` fro
 ## Structure
 
 - `app/(uz)/…`, `app/(ru)/ru/…` — routes; each language has its own root layout (correct `<html lang>`)
-- `src/views/*.tsx` — one component per page (Home, Features, How, Pricing, About, Demo, Privacy, NotFound)
+- `src/views/*.tsx` — one component per retained page (Home, Demo, Privacy, NotFound)
 - `src/components/` — `Shell` (header, footer, demo strip, hreflang, structured data), `ui` (shared pieces),
   `previews` (phone screens), client components: `Header`, `HeroLoop`, `VoiceDemo`, `Lookup`, `DemoForm`, `Toc`,
   `HowProgress`, `SiteEffects` (scroll reveal, scroll-to-top on navigation, remembered language)
 - `src/content/uz.js`, `src/content/ru.js` — all copy, metadata, form messages and sample (fictional) data
 - `src/styles/global.css` — the whole design system (tokens at the top)
 - `src/lib/` — routes and config (`site.ts`), page metadata (`meta.ts`), self-hosted fonts (`fonts.ts`)
-- `public/assets/` — favicon, flags, social images
+- `public/assets/` — favicon, flags, social images, real team portraits
 - `scripts/` — `postbuild.js` (404 pages, robots/sitemap, prefetch payloads), QA scripts, local server, form mock
 - `docs/` — design research, audit, selected direction and tokens, QA report
 - `legacy-static/` — snapshot of the earlier dependency-free static generator (reference only; also runs the landing lab)
@@ -133,3 +142,7 @@ Re-renders `public/assets/og-uz.png`, `og-ru.png` and `apple-touch-icon.png` fro
 Fonts are self-hosted at build time (no requests to Google from visitors). The language switch remembers the choice
 on the device (`localStorage`, key `mytor-lang`); it is only used to send someone who chose Russian from the bare
 `/` to `/ru/`. The voice demo never requests the microphone, records audio, calls an API or changes data.
+
+## Local design options
+
+Run `node scripts/pitch-lab.js` after `npm run check`, then open http://localhost:4322/. Three homepage directions and three demo layouts, each in Uzbek and Russian, are kept in `lab/pitch/`. They are outside the production route tree and are not included in deployment. Research, motion choices and competition coverage: `docs/pitch-motion-research.md`.

@@ -16,11 +16,11 @@ export default function RootDocument({ lang, children }: { lang: Lang; children:
   return (
     // `no-js` → `js` before first paint; JS-only layouts (menus, demos) key off it. suppressHydrationWarning: the
     // class is changed by that script before React hydrates.
-    <html lang={CONTENT[lang].htmlLang} className={`no-js ${fontVars}`} suppressHydrationWarning>
+    <html lang={CONTENT[lang].htmlLang} className={`no-js ${fontVars}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.replace("no-js","js")` }} />
       </head>
-      <body>{children}<SiteEffects /></body>
+      <body>{children}<SiteEffects homeHref={href("/")} russianHref={href("/ru/")} /></body>
     </html>
   );
 }

@@ -38,33 +38,18 @@ const SHOTS = [
   ["01-home-desktop", "/", D, { full: true }],
   ["02-home-mobile", "/", M, { full: true }],
   ["03-home-ru-desktop", "/ru/", D, { full: true }],
-  ["04-features-desktop", "/features/", D, { full: true }],
-  ["05-features-ru-mobile", "/ru/features/", M, { full: true }],
-  ["06-how-desktop", "/how-it-works/", D, { full: true }],
-  ["06b-how-mobile-320", "/how-it-works/", 320, { full: true }],
   ["06c-home-mobile-320", "/", 320, { full: false }],
-  ["06d-pricing-mobile-430", "/pricing/", 430, { full: true }],
-  ["07-pricing-desktop", "/pricing/", D, { full: true }],
-  ["08-pricing-ru-mobile", "/ru/pricing/", M, { full: true }],
-  ["09-about-desktop", "/about/", D, { full: true }],
   ["10-demo-desktop", "/demo/", D, { full: true }],
-  ["11-demo-ru-mobile-errors", "/ru/demo/", M, { full: true, run: `document.querySelector('[data-submit]').click()` }],
-  ["12-demo-not-connected", "/demo/", D, { clip: "#demo-form", run: `
-      const f=document.querySelector('#demo-form');
-      f.name.value='Test'; f.shop.value='Namuna'; f.city.value='Guliston'; f.phone.value='+998 90 123 45 67'; f.consent.checked=true;
-      document.querySelector('[data-submit]').click();` }],
-  ["13-voice-step1", "/features/", D, { clip: "#voice [data-vdemo]" }],
-  ["14-voice-step3", "/features/", D, { clip: "#voice [data-vdemo]", run: `document.querySelector('#voice [data-goto="3"]').click()` }],
-  ["15-voice-step5-ru", "/ru/features/", D, { clip: "#voice [data-vdemo]", run: `document.querySelector('#voice [data-goto="5"]').click()` }],
-  ["16-mobile-menu-open", "/pricing/", M, { full: false, run: `document.querySelector('.menu-btn').click()` }],
+  ["11-demo-ru-mobile", "/ru/demo/", M, { full: true }],
+  ["12-demo-prototype-step3", "/demo/", D, { clip: "#prototype [data-vdemo]", run: `document.querySelector('#prototype [data-goto="3"]').click()` }],
   ["17-privacy-desktop", "/privacy/", D, { full: true }],
   ["18-404-desktop", "/no-such-page/", D, { full: false }],
   ["19-404-ru-mobile", "/ru/no-such-page/", M, { full: true }],
-  ["20-faq-open-mobile", "/", M, { clip: ".faq", run: `document.querySelectorAll('.faq details')[4].open=true` }],
+  ["20-team-mobile", "/", M, { clip: "#team" }],
 ].filter(([n]) => AUDIT || MATRIX || n.includes(filter));
 if (MATRIX) {
   SHOTS.length = 0;
-  const pages = [["home", "/"], ["features", "/features/"], ["how", "/how-it-works/"], ["pricing", "/pricing/"], ["about", "/about/"], ["demo", "/demo/"], ["privacy", "/privacy/"], ["404", "/no-such-page/"]];
+  const pages = [["home", "/"], ["demo", "/demo/"], ["privacy", "/privacy/"], ["404", "/no-such-page/"]];
   for (const [name, p] of pages) {
     for (const lang of ["uz", "ru"]) {
       const path = lang === "uz" ? p : "/ru" + p;
@@ -124,7 +109,7 @@ if (AUDIT) {
     if (m.method === "Network.loadingFailed" && !m.params.canceled) record("request failed " + m.params.errorText);
     if (m.method === "Network.responseReceived" && m.params.response.status >= 400 && !/no-such-page/.test(m.params.response.url)) record(`HTTP ${m.params.response.status} ${m.params.response.url}`);
   });
-  const routes = ["/", "/features/", "/how-it-works/", "/pricing/", "/about/", "/demo/", "/privacy/", "/no-such-page/"];
+  const routes = ["/", "/demo/", "/privacy/", "/no-such-page/"];
   const all = [...routes, ...routes.map((r) => "/ru" + r)];
   for (const width of WIDTHS) {
     for (const path of all) {

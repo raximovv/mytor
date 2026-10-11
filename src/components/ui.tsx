@@ -112,7 +112,7 @@ export function Actions({ t, lang, secondary = true, className = "" }: { t: Cont
   return (
     <div className={`actions ${className}`}>
       <Link className="btn btn-primary btn-lg" href={path(lang, "demo")}>{t.ui.cta}</Link>
-      {secondary ? <Link className="btn btn-ghost btn-lg" href={path(lang, "how")}>{t.ui.ctaSecondary}</Link> : null}
+      {secondary ? <Link className="btn btn-ghost btn-lg" href={path(lang, "home") + "#flow-h"}>{t.ui.ctaSecondary}</Link> : null}
     </div>
   );
 }
@@ -143,7 +143,7 @@ export function CtaBand({ t, lang, current = "" }: { t: Content; lang: Lang; cur
           </div>
           <div className="actions">
             <Link className="btn btn-primary btn-lg" href={path(lang, "demo")}>{t.ui.cta}</Link>
-            {current === "how" ? null : <Link className="btn btn-ghost-light btn-lg" href={path(lang, "how")}>{t.ui.ctaSecondary}</Link>}
+            {current === "home" ? null : <Link className="btn btn-ghost-light btn-lg" href={path(lang, "home") + "#flow-h"}>{t.ui.ctaSecondary}</Link>}
           </div>
         </div>
       </div>

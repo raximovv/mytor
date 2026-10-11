@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Actions, H, Stamp } from "@/components/ui";
 import { CONTENT, href, other, path, prefix, type Lang, type PageKey } from "@/lib/site";
 
-const KEYS: PageKey[] = ["home", "features", "how", "pricing", "demo"];
+const KEYS: PageKey[] = ["home", "demo"];
 
 export default function NotFound({ lang }: { lang: Lang }) {
   const t = CONTENT[lang];

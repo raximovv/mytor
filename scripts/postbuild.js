@@ -41,7 +41,7 @@ for (const [from, to] of [["not-found-page", "404.html"], ["ru/not-found-page", 
 for (const d of ["_not-found", "404"]) rmSync(join(out, d), { recursive: true, force: true });
 rmSync(join(out, "_not-found.txt"), { force: true });
 
-const routes = ["", "features/", "how-it-works/", "pricing/", "about/", "demo/", "privacy/"];
+const routes = ["", "demo/", "privacy/"];
 writeFileSync(join(out, "robots.txt"), `User-agent: *\nAllow: /\n${siteUrl ? `Sitemap: ${siteUrl}${base}/sitemap.xml\n` : ""}`);
 if (siteUrl) {
   const loc = (lang, r) => `${siteUrl}${base}/${lang === "uz" ? "" : "ru/"}${r}`;

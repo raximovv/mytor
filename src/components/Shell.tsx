@@ -3,9 +3,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Header from "./Header";
 import { Logo } from "./icons";
+import { PITCH_ASSETS } from "@/content/pitch-assets";
 import { CONTENT, LANGS, abs, href, path, prefix, SITE_URL, type Lang, type PageKey } from "@/lib/site";
-
-const NAV: PageKey[] = ["features", "how", "pricing", "about"];
 
 /** Structured data: who publishes the site plus anything the page adds. No offers: prices are not final. */
 function JsonLd({ lang, extra }: { lang: Lang; extra?: object }) {
@@ -26,6 +25,9 @@ export default function Shell({ lang, page, noindex = false, jsonld, children }:
 }) {
   const t = CONTENT[lang];
   const ui = t.ui;
+  const pitchNav = Object.entries(t.pitch.nav).map(([key, label]) => ({
+    key, label, href: href(path(lang, "home")) + "#" + (key === "build" ? "implementation" : key),
+  }));
   // The same page in each language (404 pages point at the two homepages).
   const pagePath = (l: Lang) => (page === "notfound" ? prefix(l) : path(l, page));
 
@@ -36,7 +38,7 @@ export default function Shell({ lang, page, noindex = false, jsonld, children }:
       <a className="skip" href="#main">{ui.skip}</a>
       <Header
         home={prefix(lang)}
-        nav={NAV.map((k) => ({ key: k, label: ui.nav[k as keyof typeof ui.nav], href: path(lang, k) }))}
+        nav={pitchNav}
         current={page}
         cta={ui.cta}
         ctaHref={path(lang, "demo")}
@@ -54,16 +56,14 @@ export default function Shell({ lang, page, noindex = false, jsonld, children }:
           <nav className="foot-col" aria-label={ui.footer.product}>
             <p className="foot-h">{ui.footer.product}</p>
             <ul>
-              <li><Link href={path(lang, "features")}>{ui.nav.features}</Link></li>
-              <li><Link href={path(lang, "how")}>{ui.nav.how}</Link></li>
-              <li><Link href={path(lang, "pricing")}>{ui.nav.pricing}</Link></li>
+              {pitchNav.map((n) => <li key={n.key}><a href={n.href}>{n.label}</a></li>)}
               <li><Link href={path(lang, "demo")}>{ui.cta}</Link></li>
             </ul>
           </nav>
           <nav className="foot-col" aria-label={ui.footer.company}>
             <p className="foot-h">{ui.footer.company}</p>
             <ul>
-              <li><Link href={path(lang, "about")}>{ui.nav.about}</Link></li>
+              <li><a href={PITCH_ASSETS.deck} target="_blank" rel="noopener noreferrer">{t.pitch.deckLink}</a></li>
               <li><Link href={path(lang, "privacy")}>{ui.footer.privacy}</Link></li>
             </ul>
           </nav>
